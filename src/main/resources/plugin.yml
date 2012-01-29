@@ -1,0 +1,4 @@
+name: ActionMenu2
+main: com.dumptruckman.actionmenu2.plugin.ActionMenuPlugin
+version: maven-version-number
+author: dumptruckman
