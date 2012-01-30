@@ -1,48 +1,13 @@
 package com.dumptruckman.actionmenu2.impl;
 
-import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuView;
-import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
+import com.dumptruckman.actionmenu2.api.AbstractSignView;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
-public class SimpleSignView implements MenuView {
-    
-    private Block block;
-    private Sign sign;
-    private Menu menu = null;
+public class SimpleSignView extends AbstractSignView {
 
     public SimpleSignView(Sign sign) {
-        this.block = sign.getBlock();
-        this.sign = sign;
-    }
-
-    public Sign getSign() {
-        /*
-        BlockState state = this.getBlock().getState();
-        if (state instanceof Sign) {
-            return (Sign)state;
-        }
-        return null;
-        */
-        return this.sign;
-    }
-
-    public Block getBlock() {
-        return this.block;
-    }
-
-    @Override
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    @Override
-    public Menu getMenu() {
-        return this.menu;
+        super(sign);
     }
 
     @Override
@@ -62,32 +27,5 @@ public class SimpleSignView implements MenuView {
             sign.setLine(i, text);
         }
         sign.update(true);
-    }
-
-    @Override
-    public void setSender(CommandSender sender) {
-        this.getMenu().setSender(sender);
-    }
-
-    @Override
-    public CommandSender getSender() {
-        return null;
-    }
-
-    @Override
-    public void updateView(Plugin plugin, final CommandSender sender) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                Player player = null;
-                if (sender instanceof Player) {
-                    player = (Player)sender;
-                }
-                if (player != null) {
-                    player.sendBlockChange(SimpleSignView.this.getBlock().getLocation(), 0, (byte) 0);
-                }
-                SimpleSignView.this.show(sender);
-            }
-        });
     }
 }
