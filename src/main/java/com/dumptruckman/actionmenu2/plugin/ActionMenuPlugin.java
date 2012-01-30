@@ -2,7 +2,7 @@ package com.dumptruckman.actionmenu2.plugin;
 
 import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
-import com.dumptruckman.actionmenu2.api.Menus;
+import com.dumptruckman.actionmenu2.impl.Menus;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 import com.dumptruckman.actionmenu2.impl.SimpleMenuItem;
@@ -39,21 +39,21 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
     public final void signChange(final SignChangeEvent event) {
         this.getLogger().info("sign change");
         if (event.getLine(0).contains("menu")) {
-            menuHandle = Menus.getMenuHandle(
+            menuHandle = Menus.newMenuHandle(this,
                     (Sign) event.getBlock().getState());
-            MenuItem test = new SimpleMenuItem();
+            MenuItem test = new SimpleMenuItem(this);
             test.setText("test");
             test.getMenuItemListeners().add(new TestMenuItemListener());
-            MenuItem poop = new SimpleMenuItem();
+            MenuItem poop = new SimpleMenuItem(this);
             poop.setText("poop");
-            MenuItem scoop = new SimpleMenuItem();
+            MenuItem scoop = new SimpleMenuItem(this);
             scoop.setText("scoop");
 
             menuHandle.getMenu().getContents().add(test);
             menuHandle.getMenu().getContents().add(poop);
             menuHandle.getMenu().getContents().add(scoop);
-            menuHandle.setSender(event.getPlayer());
-            menuHandle.updateView(this, event.getPlayer());
+            menuHandle.touch(event.getPlayer());
+            menuHandle.updateViews(event.getPlayer());
             this.block = event.getBlock();
         }
     }
@@ -74,14 +74,14 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         }
 
         Player player = event.getPlayer();
-        menuHandle.setSender(player);
+        menuHandle.touch(player);
 
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             menuHandle.runSelected();
         } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             menuHandle.cycleMenu();
         }
-        menuHandle.updateView(this, player);
+        menuHandle.updateViews(player);
     }
 
     @EventHandler

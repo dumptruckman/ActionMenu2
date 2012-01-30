@@ -6,19 +6,32 @@ import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class DefaultHandle implements MenuHandle {
 
+    private Plugin plugin;
     private Menu menu;
-    private MenuView view;
+    private Set<MenuView> views = new LinkedHashSet<MenuView>();
 
-    public DefaultHandle(final Menu m, final MenuView v) {
+    protected DefaultHandle(Plugin p, final Menu m) {
+        this(p, m, null);
+    }
+
+    protected DefaultHandle(Plugin p, final Menu m, final MenuView v) {
+        if (m == null) {
+            throw new IllegalArgumentException("menu may not be null!");
+        }
+        this.plugin = p;
         this.menu = m;
-        this.view = v;
+        if (v != null) {
+            v.setMenu(this.menu);
+            this.views.add(v);
+        }
     }
 
     @Override
@@ -46,29 +59,62 @@ public class DefaultHandle implements MenuHandle {
     }
 
     @Override
+    public final void setMenu(Menu menu) {
+        if (menu == null) {
+            throw new IllegalArgumentException("menu may not be null!");
+        }
+        this.menu = menu;
+        for (MenuView view : this.getViews()) {
+            view.setMenu(menu);
+        }
+    }
+
+    @Override
     public final Menu getMenu() {
         return this.menu;
     }
 
-    @Override
-    public final MenuView getView() {
-        return this.view;
+    private Set<MenuView> getViews() {
+        return this.views;
     }
 
     @Override
-    public final void setSender(final CommandSender sender) {
-        this.getMenu().setSender(sender);
+    public boolean addView(MenuView view) {
+        if (view == null) {
+            throw new IllegalArgumentException("view may not be null!");
+        }
+        if (this.getViews().add(view)) {
+            view.setMenu(this.getMenu());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public final CommandSender getSender() {
-        return this.getMenu().getSender();
+    public boolean removeView(MenuView view) {
+        return this.getViews().remove(view);
     }
 
     @Override
-    public final void updateView(final Plugin plugin,
-                                 final CommandSender sender) {
-        this.getView().updateView(plugin, sender);
+    public final void touch(final Player player) {
+        this.getMenu().touch(player);
+    }
+    
+    @Override
+    public final Plugin getPlugin() {
+        return this.plugin;
+    }
+
+    @Override
+    public final Player getPlayer() {
+        return this.getMenu().getPlayer();
+    }
+
+    @Override
+    public final void updateViews(final Player player) {
+        for (MenuView view : this.getViews()) {
+            view.updateViews(player);
+        }
     }
 
     @Override
@@ -82,7 +128,7 @@ public class DefaultHandle implements MenuHandle {
     }
 
     @Override
-    public final List<MenuListener> getMenuListeners() {
+    public final Set<MenuListener> getMenuListeners() {
         return this.getMenu().getMenuListeners();
     }
 

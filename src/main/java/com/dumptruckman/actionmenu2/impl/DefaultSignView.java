@@ -3,20 +3,21 @@ package com.dumptruckman.actionmenu2.impl;
 import com.dumptruckman.actionmenu2.api.AbstractSignView;
 import com.dumptruckman.actionmenu2.api.Menu;
 import org.bukkit.block.Sign;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
-public class SimpleSignView extends AbstractSignView {
+public class DefaultSignView extends AbstractSignView {
 
-    public SimpleSignView(Sign sign) {
-        super(sign);
+    protected DefaultSignView(Plugin plugin, Sign sign) {
+        super(plugin, sign);
     }
 
-    public SimpleSignView(Sign sign, Menu menu) {
-        super(sign, menu);
+    protected DefaultSignView(Plugin plugin, Sign sign, Menu menu) {
+        super(plugin, sign, menu);
     }
 
     @Override
-    public void show(CommandSender sender) {
+    public void show(Player player) {
         if (this.getMenu() == null) {
             System.out.println("No menu");
             return;

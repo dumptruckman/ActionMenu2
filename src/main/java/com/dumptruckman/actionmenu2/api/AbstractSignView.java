@@ -2,20 +2,20 @@ package com.dumptruckman.actionmenu2.api;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public abstract class AbstractSignView extends AbstractView {
 
     private Sign sign;
     private Block block;
 
-    public AbstractSignView(Sign sign) {
-        this(sign, null);
+    public AbstractSignView(Plugin plugin, Sign sign) {
+        this(plugin, sign, null);
     }
 
-    public AbstractSignView(Sign sign, Menu menu) {
-        super(menu);
+    public AbstractSignView(Plugin plugin, Sign sign, Menu menu) {
+        super(plugin, menu);
         this.sign = sign;
         this.block = sign.getBlock();
     }
@@ -27,15 +27,15 @@ public abstract class AbstractSignView extends AbstractView {
     public final Block getBlock() {
         return this.block;
     }
+    
+    @Override
+    public abstract void show(Player player);
 
-    protected void updateView(CommandSender sender) {
-        Player player = null;
-        if (sender instanceof Player) {
-            player = (Player)sender;
-        }
+    @Override
+    protected void updateView(Player player) {
         if (player != null) {
             player.sendBlockChange(this.getBlock().getLocation(), 0, (byte) 0);
         }
-        this.show(sender);
+        this.show(player);
     }
 }

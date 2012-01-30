@@ -3,53 +3,60 @@ package com.dumptruckman.actionmenu2.impl;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.event.MenuItemChangeEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SimpleMenuItem implements MenuItem {
 
-    private final List<MenuItemListener> listeners = new ArrayList<MenuItemListener>();
+    private final Set<MenuItemListener> listeners = new LinkedHashSet<MenuItemListener>();
     private List<String> text = null;
     private Image image = null;
-    private CommandSender sender = null;
+    private Player player = null;
+    private Plugin plugin;
     private boolean selectable = true;
+    
+    public SimpleMenuItem(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
-    protected void fireChangeEvent() {
+    protected final void fireChangeEvent() {
         for (MenuItemListener listener : this.getMenuItemListeners()) {
             listener.onMenuItemChange(new MenuItemChangeEvent(
-                    this.getSender(), this));
+                    this.getPlayer(), this));
         }
     }
     
     @Override
-    public List<MenuItemListener> getMenuItemListeners() {
+    public final Set<MenuItemListener> getMenuItemListeners() {
         return this.listeners;
     }
 
     @Override
-    public void setText(String... text) {
+    public final void setText(String... text) {
         this.text = Arrays.asList(text);
         this.fireChangeEvent();
     }
 
     @Override
-    public void setLine(int index, String line) {
+    public final void setLine(int index, String line) {
         this.text.set(index, line);
         this.fireChangeEvent();
     }
 
     @Override
-    public void setImage(Image image) {
+    public final void setImage(Image image) {
         this.image = image;
         this.fireChangeEvent();
     }
 
     @Override
-    public String getText() {
+    public final String getText() {
         if (this.text == null) {
             return null;
         }
@@ -60,7 +67,7 @@ public class SimpleMenuItem implements MenuItem {
     }
 
     @Override
-    public String getFullText() {
+    public final String getFullText() {
         if (this.text == null) {
             return null;
         }
@@ -78,32 +85,37 @@ public class SimpleMenuItem implements MenuItem {
     }
 
     @Override
-    public List<String> getLines() {
+    public final List<String> getLines() {
         return this.text;
     }
 
     @Override
-    public Image getImage() {
+    public final Image getImage() {
         return this.image;
     }
 
     @Override
-    public void setSender(CommandSender sender) {
-        this.sender = sender;
+    public final void touch(Player player) {
+        this.player = player;
     }
 
     @Override
-    public CommandSender getSender() {
-        return this.sender;
+    public final Plugin getPlugin() {
+        return this.plugin;
     }
 
     @Override
-    public void setSelectable(boolean selectable) {
+    public final Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public final void setSelectable(boolean selectable) {
         this.selectable = selectable;
     }
 
     @Override
-    public boolean isSelectable() {
+    public final boolean isSelectable() {
         return this.selectable;
     }
 }

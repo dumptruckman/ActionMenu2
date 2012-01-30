@@ -6,23 +6,26 @@ import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class DefaultMenu implements Menu {
 
     private MenuContents<MenuItem> contents;
-    private List<MenuListener> listeners = new ArrayList<MenuListener>();
-    private CommandSender sender = null;
+    private Set<MenuListener> listeners = new LinkedHashSet<MenuListener>();
+    private Plugin plugin = null;
+    private Player player = null;
 
-    public DefaultMenu(final MenuContents<MenuItem> c) {
+    protected DefaultMenu(Plugin plugin, final MenuContents<MenuItem> c) {
+        this.plugin = plugin;
         this.contents = c;
     }
 
-    public DefaultMenu() {
-        this(new DefaultContents<MenuItem>());
+    protected DefaultMenu(Plugin plugin) {
+        this(plugin, new DefaultContents<MenuItem>());
     }
 
     @Override
@@ -36,13 +39,13 @@ public class DefaultMenu implements Menu {
     }
 
     @Override
-    public List<MenuListener> getMenuListeners() {
+    public Set<MenuListener> getMenuListeners() {
         return this.listeners;
     }
     
     public void run(MenuItem item) {
         for (MenuItemListener listener : item.getMenuItemListeners()) {
-            listener.onAction(new MenuItemEvent(this, this.getSender(), item));
+            listener.onAction(new MenuItemEvent(this, this.getPlayer(), item));
         }
     }
     
@@ -51,12 +54,17 @@ public class DefaultMenu implements Menu {
     }
 
     @Override
-    public void setSender(CommandSender sender) {
-        this.sender = sender;
+    public void touch(Player player) {
+        this.player = player;
+    }
+    
+    @Override
+    public Plugin getPlugin() {
+        return this.plugin;
     }
 
     @Override
-    public CommandSender getSender() {
-        return this.sender;
+    public Player getPlayer() {
+        return this.player;
     }
 }

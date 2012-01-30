@@ -16,13 +16,13 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     private final List<MenuContentsListener> listeners;
     private int selectedIndex;
 
-    public DefaultContents(final List<E> contents) {
+    protected DefaultContents(final List<E> contents) {
         super(contents);
         this.listeners = new ArrayList<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
     }
 
-    public DefaultContents() {
+    protected DefaultContents() {
         this(new ArrayList<E>());
     }
 

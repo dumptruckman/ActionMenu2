@@ -2,7 +2,7 @@ package com.dumptruckman.actionmenu2.api;
 
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Menu extends MenuInterface {
 
@@ -10,7 +10,7 @@ public interface Menu extends MenuInterface {
     
     MenuItem getSelected();
 
-    List<MenuListener> getMenuListeners();
+    Set<MenuListener> getMenuListeners();
     
     void run(MenuItem item);
 

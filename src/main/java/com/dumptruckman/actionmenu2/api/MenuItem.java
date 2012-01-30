@@ -4,10 +4,11 @@ import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 
 import java.awt.Image;
 import java.util.List;
+import java.util.Set;
 
 public interface MenuItem extends MenuInterface {
 
-    List<MenuItemListener> getMenuItemListeners();
+    Set<MenuItemListener> getMenuItemListeners();
 
     void setText(String...text);
 

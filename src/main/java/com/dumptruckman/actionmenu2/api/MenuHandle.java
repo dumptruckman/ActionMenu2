@@ -1,12 +1,12 @@
 package com.dumptruckman.actionmenu2.api;
 
-public interface MenuHandle extends Menu, MenuInterface, ViewUpdater {
+public interface MenuHandle extends Menu, MenuContainer, MenuInterface, ViewUpdater {
 
     void cycleMenu();
 
     void cycleMenu(Boolean reverse);
-
-    Menu getMenu();
     
-    MenuView getView();
+    boolean addView(MenuView view);
+    
+    boolean removeView(MenuView view);
 }

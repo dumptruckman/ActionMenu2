@@ -1,9 +1,8 @@
 package com.dumptruckman.actionmenu2.api;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.entity.Player;
 
 public interface ViewUpdater {
-    
-    void updateView(Plugin plugin, CommandSender sender);
+
+    void updateViews(Player player);
 }

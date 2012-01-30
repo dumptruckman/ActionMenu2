@@ -1,16 +1,20 @@
 package com.dumptruckman.actionmenu2.api;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public abstract class AbstractView implements MenuView {
 
+    private Plugin plugin;
     private Menu menu = null;
 
-    public AbstractView() { }
+    public AbstractView(Plugin plugin) {
+        this(plugin, null);
+    }
     
-    public AbstractView(Menu menu) {
+    public AbstractView(Plugin plugin, Menu menu) {
+        this.plugin = plugin;
         this.menu = menu;
     }
 
@@ -25,27 +29,37 @@ public abstract class AbstractView implements MenuView {
     }
 
     @Override
-    public final void setSender(CommandSender sender) {
-        this.getMenu().setSender(sender);
-    }
-
-    @Override
-    public final CommandSender getSender() {
-        return this.getMenu().getSender();
+    public final void touch(Player player) {
+        if (this.getMenu() != null) {
+            this.getMenu().touch(player);
+        }
     }
     
     @Override
-    public abstract void show(CommandSender sender);
+    public final Plugin getPlugin() {
+        return this.plugin;
+    }
 
     @Override
-    public void updateView(Plugin plugin, final CommandSender sender) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+    public final Player getPlayer() {
+        if (this.getMenu() == null) {
+            return null;
+        }
+        return this.getMenu().getPlayer();
+    }
+    
+    @Override
+    public abstract void show(Player player);
+
+    @Override
+    public void updateViews(final Player player) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable() {
             @Override
             public void run() {
-                updateView(sender);
+                updateViews(player);
             }
         });
     }
     
-    protected abstract void updateView(CommandSender sender);
+    protected abstract void updateView(Player player);
 }

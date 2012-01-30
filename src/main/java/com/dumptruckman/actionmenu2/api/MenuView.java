@@ -1,12 +1,8 @@
 package com.dumptruckman.actionmenu2.api;
 
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public interface MenuView extends MenuInterface, ViewUpdater {
-
-    void setMenu(Menu menu);
+public interface MenuView extends MenuContainer, MenuInterface, ViewUpdater {
     
-    Menu getMenu();
-    
-    void show(CommandSender sender);
+    void show(Player player);
 }
