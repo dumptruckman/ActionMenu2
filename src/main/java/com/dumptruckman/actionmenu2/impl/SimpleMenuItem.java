@@ -16,6 +16,7 @@ public class SimpleMenuItem implements MenuItem {
     private List<String> text = null;
     private Image image = null;
     private CommandSender sender = null;
+    private boolean selectable = true;
 
     protected void fireChangeEvent() {
         for (MenuItemListener listener : this.getMenuItemListeners()) {
@@ -94,5 +95,15 @@ public class SimpleMenuItem implements MenuItem {
     @Override
     public CommandSender getSender() {
         return this.sender;
+    }
+
+    @Override
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    @Override
+    public boolean isSelectable() {
+        return this.selectable;
     }
 }

@@ -22,4 +22,8 @@ public interface MenuItem extends MenuInterface {
     List<String> getLines();
 
     Image getImage();
+
+    void setSelectable(boolean selectable);
+
+    boolean isSelectable();
 }
