@@ -1,7 +1,9 @@
 package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.MenuItem;
-import com.dumptruckman.actionmenu2.api.event.ActionListener;
+import com.dumptruckman.actionmenu2.api.event.MenuItemChangeEvent;
+import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import org.bukkit.command.CommandSender;
 
 import java.awt.Image;
 import java.util.ArrayList;
@@ -10,28 +12,39 @@ import java.util.List;
 
 public class SimpleMenuItem implements MenuItem {
 
-    private final List<ActionListener> listeners = new ArrayList<ActionListener>();
+    private final List<MenuItemListener> listeners = new ArrayList<MenuItemListener>();
     private List<String> text = null;
     private Image image = null;
+    private CommandSender sender = null;
 
+    protected void fireChangeEvent() {
+        for (MenuItemListener listener : this.getMenuItemListeners()) {
+            listener.onMenuItemChange(new MenuItemChangeEvent(
+                    this.getSender(), this));
+        }
+    }
+    
     @Override
-    public List<ActionListener> getListeners() {
+    public List<MenuItemListener> getMenuItemListeners() {
         return this.listeners;
     }
 
     @Override
     public void setText(String... text) {
         this.text = Arrays.asList(text);
+        this.fireChangeEvent();
     }
 
     @Override
     public void setLine(int index, String line) {
         this.text.set(index, line);
+        this.fireChangeEvent();
     }
 
     @Override
     public void setImage(Image image) {
         this.image = image;
+        this.fireChangeEvent();
     }
 
     @Override
@@ -71,5 +84,15 @@ public class SimpleMenuItem implements MenuItem {
     @Override
     public Image getImage() {
         return this.image;
+    }
+
+    @Override
+    public void setSender(CommandSender sender) {
+        this.sender = sender;
+    }
+
+    @Override
+    public CommandSender getSender() {
+        return this.sender;
     }
 }

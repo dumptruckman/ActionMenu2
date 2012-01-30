@@ -1,4 +1,4 @@
-package com.dumptruckman.actionmenu2.api.view;
+package com.dumptruckman.actionmenu2.api;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;

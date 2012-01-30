@@ -10,56 +10,49 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DefaultContents<E extends MenuItem> extends ForwardingList<E> implements MenuContents<E> {
-    
+public class DefaultContents<E extends MenuItem> extends ForwardingList<E>
+        implements MenuContents<E> {
+
     private final List<MenuContentsListener> listeners;
     private int selectedIndex;
-    
-    public DefaultContents(List<E> contents) {
+
+    public DefaultContents(final List<E> contents) {
         super(contents);
         this.listeners = new ArrayList<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
     }
-    
+
     public DefaultContents() {
         this(new ArrayList<E>());
     }
 
     @Override
-    public boolean addMenuContentsListener(MenuContentsListener listener) {
-        return this.listeners.add(listener);
-    }
-
-    @Override
-    public boolean removeMenuContentsListener(MenuContentsListener listener) {
-        return this.listeners.remove(listener);
-    }
-
-    @Override
-    public int getSelectedIndex() {
+    public final int getSelectedIndex() {
         return selectedIndex;
     }
-    
+
     @Override
-    public void setSelectedIndex(int index) {
+    public final void setSelectedIndex(final int index) {
         if (index < -1 || index >= this.size()) {
             throw new IndexOutOfBoundsException();
         }
         int oldIndex = this.selectedIndex;
         this.selectedIndex = index;
         for (MenuContentsListener listener : this.listeners) {
-            listener.onSelectionChange(new MenuContentsEvent(this, MenuContentsEvent.SELECTION_CHANGED,
+            listener.onSelectionChange(new MenuContentsEvent(this,
+                    MenuContentsEvent.SELECTION_CHANGED,
                     oldIndex, index));
         }
     }
-    
+
     @Override
-    public boolean add(E e) {
+    public final boolean add(final E e) {
         int index = this.size();
         boolean added = super.add(e);
         if (added) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_ADDED,
+                listener.onContentsAdd(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_ADDED,
                         index, index));
             }
             if (this.getSelectedIndex() == -1) {
@@ -68,12 +61,13 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
         }
         return added;
     }
-    
+
     @Override
-    public void add(int index, E e) {
+    public final void add(final int index, final E e) {
         super.add(index, e);
         for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsAdd(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_ADDED,
+            listener.onContentsAdd(new MenuContentsEvent(this,
+                    MenuContentsEvent.CONTENTS_ADDED,
                     index, index));
         }
         if (this.getSelectedIndex() == -1) {
@@ -84,12 +78,13 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public boolean remove(Object o) {
+    public final boolean remove(final Object o) {
         int index = this.indexOf(o);
         boolean removed = super.remove(o);
         if (removed) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsRemove(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_REMOVED,
+                listener.onContentsRemove(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_REMOVED,
                         index, index));
             }
             if (this.getSelectedIndex() >= this.size()) {
@@ -100,13 +95,14 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public final boolean addAll(final Collection<? extends E> c) {
         int index0 = this.size();
         boolean added = super.addAll(c);
         int index1 = this.size();
         if (added) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_ADDED,
+                listener.onContentsAdd(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_ADDED,
                         index0, index1));
             }
             if (this.getSelectedIndex() == -1) {
@@ -117,12 +113,14 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public final boolean addAll(final int index,
+                                final Collection<? extends E> c) {
         boolean added = super.addAll(index, c);
         int index1 = index + c.size();
         if (added) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_ADDED,
+                listener.onContentsAdd(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_ADDED,
                         index, index1));
             }
             if (this.getSelectedIndex() == -1) {
@@ -135,7 +133,7 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public final boolean removeAll(final Collection<?> c) {
         E newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
             if (!c.contains(this.get(i))) {
@@ -146,7 +144,8 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
         boolean removed = super.removeAll(c);
         if (removed) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsChange(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_CHANGED,
+                listener.onContentsChange(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_CHANGED,
                         -1, -1));
             }
             if (newSelectedItem == null) {
@@ -163,7 +162,7 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public final boolean retainAll(final Collection<?> c) {
         E newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
             if (c.contains(this.get(i))) {
@@ -174,7 +173,8 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
         boolean removed = super.retainAll(c);
         if (removed) {
             for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsChange(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_CHANGED,
+                listener.onContentsChange(new MenuContentsEvent(this,
+                        MenuContentsEvent.CONTENTS_CHANGED,
                         -1, -1));
             }
             if (newSelectedItem == null) {
@@ -191,31 +191,34 @@ public class DefaultContents<E extends MenuItem> extends ForwardingList<E> imple
     }
 
     @Override
-    public void clear() {
+    public final void clear() {
         int index1 = this.size();
         super.clear();
         for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_REMOVED,
+            listener.onContentsChange(new MenuContentsEvent(this,
+                    MenuContentsEvent.CONTENTS_REMOVED,
                     0, index1));
         }
         this.setSelectedIndex(-1);
     }
 
     @Override
-    public E set(int index, E element) {
+    public final E set(final int index, final E element) {
         E e = super.set(index, element);
         for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_CHANGED,
+            listener.onContentsChange(new MenuContentsEvent(this,
+                    MenuContentsEvent.CONTENTS_CHANGED,
                     index, index));
         }
         return e;
     }
 
     @Override
-    public E remove(int index) {
+    public final E remove(final int index) {
         E e = super.remove(index);
         for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this, MenuContentsEvent.CONTENTS_REMOVED,
+            listener.onContentsChange(new MenuContentsEvent(this,
+                    MenuContentsEvent.CONTENTS_REMOVED,
                     index, index));
         }
         if (this.getSelectedIndex() == index) {

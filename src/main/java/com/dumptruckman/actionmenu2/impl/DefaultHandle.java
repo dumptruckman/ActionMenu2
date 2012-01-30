@@ -4,30 +4,30 @@ import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuContents;
 import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
+import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
-import com.dumptruckman.actionmenu2.api.view.MenuView;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
 public class DefaultHandle implements MenuHandle {
-    
-    Menu menu;
-    MenuView view;
 
-    public DefaultHandle(Menu menu, MenuView view) {
-        this.menu = menu;
-        this.view = view;
+    private Menu menu;
+    private MenuView view;
+
+    public DefaultHandle(final Menu m, final MenuView v) {
+        this.menu = m;
+        this.view = v;
     }
 
     @Override
-    public void cycleMenu() {
+    public final void cycleMenu() {
         this.cycleMenu(false);
     }
 
     @Override
-    public void cycleMenu(Boolean reverse) {
+    public final void cycleMenu(final Boolean reverse) {
         MenuContents contents = this.getMenu().getContents();
         int index = contents.getSelectedIndex();
         if (reverse) {
@@ -36,65 +36,63 @@ public class DefaultHandle implements MenuHandle {
             index++;
         }
         if (contents.isEmpty()) {
-            System.out.println("Menu item, selecting nothing");
             index = -1;
         } else if (index >= contents.size()) {
-            System.out.println("reached end of menu, going to beginning.");
             index = 0;
         } else if (index < 0) {
-            System.out.println("reached beginning of menu, going to end");
             index = contents.size() - 1;
         }
         contents.setSelectedIndex(index);
     }
 
     @Override
-    public Menu getMenu() {
+    public final Menu getMenu() {
         return this.menu;
     }
 
     @Override
-    public MenuView getView() {
+    public final MenuView getView() {
         return this.view;
     }
 
     @Override
-    public void setSender(CommandSender sender) {
+    public final void setSender(final CommandSender sender) {
         this.getMenu().setSender(sender);
     }
 
     @Override
-    public CommandSender getSender() {
+    public final CommandSender getSender() {
         return this.getMenu().getSender();
     }
 
     @Override
-    public void updateView(Plugin plugin, CommandSender sender) {
+    public final void updateView(final Plugin plugin,
+                                 final CommandSender sender) {
         this.getView().updateView(plugin, sender);
     }
 
     @Override
-    public MenuContents<MenuItem> getContents() {
+    public final MenuContents<MenuItem> getContents() {
         return this.getMenu().getContents();
     }
 
     @Override
-    public MenuItem getSelected() {
+    public final MenuItem getSelected() {
         return this.getMenu().getSelected();
     }
 
     @Override
-    public List<MenuListener> getListeners() {
-        return this.getMenu().getListeners();
+    public final List<MenuListener> getMenuListeners() {
+        return this.getMenu().getMenuListeners();
     }
 
     @Override
-    public void run(MenuItem item) {
+    public final void run(final MenuItem item) {
         this.getMenu().run(item);
     }
 
     @Override
-    public void runSelected() {
+    public final void runSelected() {
         this.getMenu().runSelected();
     }
 }

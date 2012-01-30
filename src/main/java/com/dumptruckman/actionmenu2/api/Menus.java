@@ -1,6 +1,5 @@
 package com.dumptruckman.actionmenu2.api;
 
-import com.dumptruckman.actionmenu2.api.view.MenuView;
 import com.dumptruckman.actionmenu2.impl.DefaultContents;
 import com.dumptruckman.actionmenu2.impl.DefaultHandle;
 import com.dumptruckman.actionmenu2.impl.DefaultMenu;

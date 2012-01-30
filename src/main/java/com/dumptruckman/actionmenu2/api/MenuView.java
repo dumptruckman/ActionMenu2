@@ -1,7 +1,5 @@
-package com.dumptruckman.actionmenu2.api.view;
+package com.dumptruckman.actionmenu2.api;
 
-import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuInterface;
 import org.bukkit.command.CommandSender;
 
 public interface MenuView extends MenuInterface, ViewUpdater {

@@ -10,7 +10,7 @@ public interface Menu extends MenuInterface {
     
     MenuItem getSelected();
 
-    List<MenuListener> getListeners();
+    List<MenuListener> getMenuListeners();
     
     void run(MenuItem item);
 

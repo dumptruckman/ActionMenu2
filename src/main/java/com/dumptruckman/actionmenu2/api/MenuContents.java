@@ -6,10 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface MenuContents<E extends MenuItem> extends List<E> {
-
-    boolean addMenuContentsListener(MenuContentsListener listener);
-    
-    boolean removeMenuContentsListener(MenuContentsListener listener);
     
     int getSelectedIndex();
 

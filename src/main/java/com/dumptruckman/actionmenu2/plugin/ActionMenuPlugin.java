@@ -1,11 +1,10 @@
-package com.dumptruckman.actionmenu.plugin;
+package com.dumptruckman.actionmenu2.plugin;
 
-import com.dumptruckman.actionmenu.ActionMenu;
 import com.dumptruckman.actionmenu2.api.MenuHandle;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.Menus;
-import com.dumptruckman.actionmenu2.api.event.ActionEvent;
-import com.dumptruckman.actionmenu2.api.event.ActionListener;
+import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
+import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 import com.dumptruckman.actionmenu2.impl.SimpleMenuItem;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -23,27 +22,28 @@ import org.bukkit.util.Vector;
 
 public class ActionMenuPlugin extends JavaPlugin implements Listener {
 
-    MenuHandle menuHandle = null;
-    
-    Block block = null;
+    private MenuHandle menuHandle = null;
 
-    public void onEnable() {
+    private Block block = null;
+
+    public final void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
         this.getLogger().info("enabled");
     }
 
-    public void onDisable() {
+    public final void onDisable() {
         this.getLogger().info("disabled");
     }
 
     @EventHandler
-    public void signChange(SignChangeEvent event) {
+    public final void signChange(final SignChangeEvent event) {
         this.getLogger().info("sign change");
         if (event.getLine(0).contains("menu")) {
-            menuHandle = Menus.getMenuHandle((Sign) event.getBlock().getState());
+            menuHandle = Menus.getMenuHandle(
+                    (Sign) event.getBlock().getState());
             MenuItem test = new SimpleMenuItem();
             test.setText("test");
-            test.getListeners().add(new TestActionListener());
+            test.getMenuItemListeners().add(new TestMenuItemListener());
             MenuItem poop = new SimpleMenuItem();
             poop.setText("poop");
             MenuItem scoop = new SimpleMenuItem();
@@ -55,12 +55,11 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
             menuHandle.setSender(event.getPlayer());
             menuHandle.updateView(this, event.getPlayer());
             this.block = event.getBlock();
-            this.getLogger().info("menu made");
         }
     }
 
     @EventHandler
-    public void playerInteract(PlayerInteractEvent event) {
+    public final void playerInteract(final PlayerInteractEvent event) {
         if (block == null) {
             return;
         }
@@ -84,24 +83,35 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         }
         menuHandle.updateView(this, player);
     }
-    
+
     @EventHandler
-    public void blockPlace(BlockPlaceEvent event) {
-        if (event.isCancelled()) return;
-        if (this.block == null) return;
+    public final void blockPlace(final BlockPlaceEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+        if (this.block == null) {
+            return;
+        }
         Block blockAgainst = event.getBlockAgainst();
-        if (blockAgainst.equals(block)) event.setCancelled(true);
+        if (blockAgainst.equals(block)) {
+            event.setCancelled(true);
+        }
     }
 
-    private class TestActionListener implements ActionListener {
-        public void onAction(ActionEvent event) {
-            System.out.println(event.getSender());
-            if (event.getSender() != null && event.getSender() instanceof Player) {
-                Player player = (Player)event.getSender();
-                final Vector direction = player.getEyeLocation().getDirection().multiply(2);
-                player.getWorld().spawn(player.getEyeLocation().add(direction.getX(), direction.getY(),
+    private class TestMenuItemListener implements MenuItemListener {
+        public void onAction(final MenuItemEvent event) {
+            if (event.getSender() != null
+                    && event.getSender() instanceof Player) {
+                Player player = (Player) event.getSender();
+                final Vector direction = player.getEyeLocation()
+                        .getDirection().multiply(2);
+                player.getWorld().spawn(player.getEyeLocation()
+                        .add(direction.getX(), direction.getY(),
                         direction.getZ()), Fireball.class);
             }
+        }
+        
+        public void onMenuItemChange(final MenuItemEvent event) {
 
         }
     }

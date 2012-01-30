@@ -1,13 +1,13 @@
 package com.dumptruckman.actionmenu2.api;
 
-import com.dumptruckman.actionmenu2.api.event.ActionListener;
+import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
 
 import java.awt.Image;
 import java.util.List;
 
-public interface MenuItem {
+public interface MenuItem extends MenuInterface {
 
-    List<ActionListener> getListeners();
+    List<MenuItemListener> getMenuItemListeners();
 
     void setText(String...text);
 

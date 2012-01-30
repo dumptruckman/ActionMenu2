@@ -1,11 +1,9 @@
 package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.view.MenuView;
-import com.dumptruckman.actionmenu2.api.view.SignView;
+import com.dumptruckman.actionmenu2.api.MenuView;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
