@@ -11,6 +11,11 @@ public abstract class AbstractSignView extends AbstractView {
     private Block block;
 
     public AbstractSignView(Sign sign) {
+        this(sign, null);
+    }
+
+    public AbstractSignView(Sign sign, Menu menu) {
+        super(menu);
         this.sign = sign;
         this.block = sign.getBlock();
     }

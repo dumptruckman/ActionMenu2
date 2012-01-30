@@ -1,6 +1,7 @@
 package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.AbstractSignView;
+import com.dumptruckman.actionmenu2.api.Menu;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 
@@ -8,6 +9,10 @@ public class SimpleSignView extends AbstractSignView {
 
     public SimpleSignView(Sign sign) {
         super(sign);
+    }
+
+    public SimpleSignView(Sign sign, Menu menu) {
+        super(sign, menu);
     }
 
     @Override

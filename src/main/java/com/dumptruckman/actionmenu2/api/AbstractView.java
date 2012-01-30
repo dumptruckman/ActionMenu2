@@ -8,6 +8,12 @@ public abstract class AbstractView implements MenuView {
 
     private Menu menu = null;
 
+    public AbstractView() { }
+    
+    public AbstractView(Menu menu) {
+        this.menu = menu;
+    }
+
     @Override
     public final void setMenu(Menu menu) {
         this.menu = menu;
@@ -25,7 +31,7 @@ public abstract class AbstractView implements MenuView {
 
     @Override
     public final CommandSender getSender() {
-        return null;
+        return this.getMenu().getSender();
     }
     
     @Override
