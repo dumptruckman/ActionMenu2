@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dumptruckman</groupId>
     <artifactId>ActionMenu2</artifactId>
-    <version>dev</version>
+    <version>dev-SNAPSHOT</version>
     <name>ActionMenu2</name>
     <description>ActionMenu2</description>
     <properties>
