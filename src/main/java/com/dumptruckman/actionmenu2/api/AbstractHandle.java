@@ -92,6 +92,13 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
+    public final void show(Player player) {
+        for (MenuView view : this.getViews()) {
+            view.show(player);
+        }
+    }
+
+    @Override
     public final void updateViews(final Player player) {
         for (MenuView view : this.getViews()) {
             view.updateViews(player);
