@@ -35,6 +35,9 @@ class DefaultMenu implements Menu {
 
     @Override
     public MenuItem getSelected() {
+        if (this.getContents().getSelectedIndex() < 0) {
+            return null;
+        }
         return this.getContents().get(this.getContents().getSelectedIndex());
     }
 
@@ -44,8 +47,10 @@ class DefaultMenu implements Menu {
     }
     
     public void run(MenuItem item) {
-        for (MenuItemListener listener : item.getMenuItemListeners()) {
-            listener.onAction(new MenuItemEvent(this, this.getPlayer(), item));
+        if (item != null) {
+            for (MenuItemListener listener : item.getMenuItemListeners()) {
+                listener.onAction(new MenuItemEvent(this, this.getPlayer(), item));
+            }
         }
     }
     
