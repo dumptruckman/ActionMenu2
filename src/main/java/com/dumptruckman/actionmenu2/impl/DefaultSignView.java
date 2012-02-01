@@ -6,7 +6,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class DefaultSignView extends AbstractSignView {
+class DefaultSignView extends AbstractSignView {
 
     protected DefaultSignView(Plugin plugin, Sign sign) {
         super(plugin, sign);

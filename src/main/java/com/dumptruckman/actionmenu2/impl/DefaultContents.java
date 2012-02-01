@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DefaultContents<E extends MenuItem> extends ForwardingList<E>
+class DefaultContents<E extends MenuItem> extends ForwardingList<E>
         implements MenuContents<E> {
 
     private final List<MenuContentsListener> listeners;

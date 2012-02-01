@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class DefaultMenu implements Menu {
+class DefaultMenu implements Menu {
 
     private MenuContents<MenuItem> contents;
     private Set<MenuListener> listeners = new LinkedHashSet<MenuListener>();
