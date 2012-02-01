@@ -59,4 +59,8 @@ public class Menus {
     public static MenuHandle newMenuHandle(Plugin plugin) {
         return Menus.newMenuHandle(plugin, new DefaultMenu(plugin));
     }
+    
+    public static Menu newMenu(Plugin plugin) {
+        return new DefaultMenu(plugin);
+    }
 }
