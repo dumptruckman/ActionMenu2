@@ -7,8 +7,8 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class AbstractSignView extends AbstractView {
 
-    private Sign sign;
-    private Block block;
+    protected Sign sign;
+    protected Block block;
 
     public AbstractSignView(Plugin plugin, Sign sign) {
         this(plugin, sign, null);
@@ -20,11 +20,11 @@ public abstract class AbstractSignView extends AbstractView {
         this.block = sign.getBlock();
     }
 
-    public final Sign getSign() {
+    public Sign getSign() {
         return this.sign;
     }
 
-    public final Block getBlock() {
+    public Block getBlock() {
         return this.block;
     }
     

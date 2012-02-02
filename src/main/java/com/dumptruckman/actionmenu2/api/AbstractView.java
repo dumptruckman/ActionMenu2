@@ -6,8 +6,8 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class AbstractView implements MenuView {
 
-    private Plugin plugin;
-    private Menu menu = null;
+    protected Plugin plugin;
+    protected Menu menu = null;
 
     public AbstractView(Plugin plugin) {
         this(plugin, null);
@@ -19,29 +19,29 @@ public abstract class AbstractView implements MenuView {
     }
 
     @Override
-    public final void setMenu(Menu menu) {
+    public void setMenu(Menu menu) {
         this.menu = menu;
     }
 
     @Override
-    public final Menu getMenu() {
+    public Menu getMenu() {
         return this.menu;
     }
 
     @Override
-    public final void touch(Player player) {
+    public void touch(Player player) {
         if (this.getMenu() != null) {
             this.getMenu().touch(player);
         }
     }
     
     @Override
-    public final Plugin getPlugin() {
+    public Plugin getPlugin() {
         return this.plugin;
     }
 
     @Override
-    public final Player getPlayer() {
+    public Player getPlayer() {
         if (this.getMenu() == null) {
             return null;
         }
@@ -56,7 +56,7 @@ public abstract class AbstractView implements MenuView {
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), new Runnable() {
             @Override
             public void run() {
-                updateViews(player);
+                updateView(player);
             }
         });
     }

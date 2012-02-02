@@ -10,9 +10,9 @@ import java.util.Set;
 
 public abstract class AbstractHandle implements MenuHandle {
 
-    private Plugin plugin;
-    private Menu menu;
-    private Set<MenuView> views = new LinkedHashSet<MenuView>();
+    protected Plugin plugin;
+    protected Menu menu;
+    protected Set<MenuView> views = new LinkedHashSet<MenuView>();
 
     protected AbstractHandle(Plugin p, final Menu m) {
         this(p, m, null);
@@ -31,7 +31,7 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
-    public final void cycleMenu() {
+    public void cycleMenu() {
         this.cycleMenu(false);
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractHandle implements MenuHandle {
     public abstract void cycleMenu(final boolean reverse);
 
     @Override
-    public final void setMenu(Menu menu) {
+    public void setMenu(Menu menu) {
         if (menu == null) {
             throw new IllegalArgumentException("menu may not be null!");
         }
@@ -50,17 +50,17 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
-    public final Menu getMenu() {
+    public Menu getMenu() {
         return this.menu;
     }
 
     @Override
-    public final Set<MenuView> getViews() {
+    public Set<MenuView> getViews() {
         return Collections.unmodifiableSet(this.views);
     }
 
     @Override
-    public final boolean addView(MenuView view) {
+    public boolean addView(MenuView view) {
         if (view == null) {
             throw new IllegalArgumentException("view may not be null!");
         }
@@ -72,61 +72,61 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
-    public final boolean removeView(MenuView view) {
+    public boolean removeView(MenuView view) {
         return this.views.remove(view);
     }
 
     @Override
-    public final void touch(final Player player) {
+    public void touch(final Player player) {
         this.getMenu().touch(player);
     }
 
     @Override
-    public final Plugin getPlugin() {
+    public Plugin getPlugin() {
         return this.plugin;
     }
 
     @Override
-    public final Player getPlayer() {
+    public Player getPlayer() {
         return this.getMenu().getPlayer();
     }
 
     @Override
-    public final void show(Player player) {
+    public void show(Player player) {
         for (MenuView view : this.getViews()) {
             view.show(player);
         }
     }
 
     @Override
-    public final void updateViews(final Player player) {
+    public void updateViews(final Player player) {
         for (MenuView view : this.getViews()) {
             view.updateViews(player);
         }
     }
 
     @Override
-    public final MenuContents getContents() {
+    public MenuContents getContents() {
         return this.getMenu().getContents();
     }
 
     @Override
-    public final MenuItem getSelected() {
+    public MenuItem getSelected() {
         return this.getMenu().getSelected();
     }
 
     @Override
-    public final Set<MenuListener> getMenuListeners() {
+    public Set<MenuListener> getMenuListeners() {
         return this.getMenu().getMenuListeners();
     }
 
     @Override
-    public final void run(final MenuItem item) {
+    public void run(final MenuItem item) {
         this.getMenu().run(item);
     }
 
     @Override
-    public final void runSelected() {
+    public void runSelected() {
         this.getMenu().runSelected();
     }
 }
