@@ -4,6 +4,7 @@ import com.dumptruckman.actionmenu2.api.event.MenuContentsListener;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface MenuContents extends List<MenuItem> {
     
@@ -223,4 +224,6 @@ public interface MenuContents extends List<MenuItem> {
      */
     @Override
     MenuItem remove(int index);
+    
+    Set<MenuContentsListener> getMenuContentsListeners();
 }

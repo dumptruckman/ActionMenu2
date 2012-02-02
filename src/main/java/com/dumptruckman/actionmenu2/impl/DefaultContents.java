@@ -8,17 +8,19 @@ import com.dumptruckman.actionmenu2.api.util.ForwardingList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 class DefaultContents extends ForwardingList<MenuItem>
         implements MenuContents {
 
-    private final List<MenuContentsListener> listeners;
+    private final Set<MenuContentsListener> listeners;
     private int selectedIndex;
 
     private DefaultContents(final List<MenuItem> contents) {
         super(contents);
-        this.listeners = new ArrayList<MenuContentsListener>();
+        this.listeners = new LinkedHashSet<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
     }
 
@@ -241,5 +243,10 @@ class DefaultContents extends ForwardingList<MenuItem>
             }
         }
         return getFirstSelectableIndex();
+    }
+
+    @Override
+    public Set<MenuContentsListener> getMenuContentsListeners() {
+        return this.listeners;
     }
 }

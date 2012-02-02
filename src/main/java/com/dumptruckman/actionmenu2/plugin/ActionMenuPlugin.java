@@ -1,6 +1,6 @@
 package com.dumptruckman.actionmenu2.plugin;
 
-import com.dumptruckman.actionmenu2.api.MenuHandle;
+import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.impl.Menus;
 import com.dumptruckman.actionmenu2.api.event.MenuItemEvent;
@@ -22,9 +22,8 @@ import org.bukkit.util.Vector;
 
 public class ActionMenuPlugin extends JavaPlugin implements Listener {
 
-    private MenuHandle menuHandle = null;
-
     private Block block = null;
+    private Menu menu = null;
 
     public final void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -39,21 +38,20 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
     public final void signChange(final SignChangeEvent event) {
         this.getLogger().info("sign change");
         if (event.getLine(0).contains("menu")) {
-            menuHandle = Menus.newMenuHandle(this,
+            menu = Menus.newMenu(this,
                     (Sign) event.getBlock().getState());
-            MenuItem test = new SimpleMenuItem(this);
+            MenuItem test = new SimpleMenuItem();
             test.setText("test");
             test.getMenuItemListeners().add(new TestMenuItemListener());
-            MenuItem poop = new SimpleMenuItem(this);
+            MenuItem poop = new SimpleMenuItem();
             poop.setText("poop");
-            MenuItem scoop = new SimpleMenuItem(this);
+            MenuItem scoop = new SimpleMenuItem();
             scoop.setText("scoop");
 
-            menuHandle.getMenu().getContents().add(test);
-            menuHandle.getMenu().getContents().add(poop);
-            menuHandle.getMenu().getContents().add(scoop);
-            menuHandle.touch(event.getPlayer());
-            menuHandle.updateViews(event.getPlayer());
+            menu.getContents().add(test);
+            menu.getContents().add(poop);
+            menu.getContents().add(scoop);
+            menu.setUser(event.getPlayer());
             this.block = event.getBlock();
         }
     }
@@ -74,14 +72,14 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         }
 
         Player player = event.getPlayer();
-        menuHandle.touch(player);
+        menu.setUser(player);
 
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            menuHandle.runSelected();
+            menu.getSelected().run();
         } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            menuHandle.cycleMenu();
+            menu.cycleSelection();
         }
-        menuHandle.updateViews(player);
+        menu.setUser(player);
     }
 
     @EventHandler

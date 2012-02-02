@@ -1,19 +1,22 @@
 package com.dumptruckman.actionmenu2.api;
 
-import com.dumptruckman.actionmenu2.api.event.MenuListener;
+import org.bukkit.entity.Player;
 
 import java.util.Set;
 
-public interface Menu extends MenuInterface {
+public interface Menu {
 
-    // TODO consider MenuModel interface for getContents()
     MenuContents getContents();
     
     MenuItem getSelected();
 
-    Set<MenuListener> getMenuListeners();
-    
-    void run(MenuItem item);
+    void cycleSelection();
 
-    void runSelected();
+    void cycleSelection(boolean reverse);
+
+    MenuViews getViews();
+
+    void setUser(Player player);
+
+    Player getUser();
 }
