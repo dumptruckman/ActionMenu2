@@ -24,7 +24,9 @@ class DefaultHandle extends AbstractHandle {
             return;
         }
         int index = contents.getSelectedIndex();
-        for (int step = reverse ? -1 : 1, newIndex = index + step; newIndex != index;
+        for (int step = reverse ? -1 : 1,
+                     newIndex = stepModulo(index, step, contents.size());
+                newIndex != index;
                 newIndex = this.stepModulo(newIndex, step, contents.size())) {
             if (newIndex < 0) {
                 continue;
