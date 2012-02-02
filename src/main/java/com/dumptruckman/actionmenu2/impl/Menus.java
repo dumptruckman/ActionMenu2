@@ -15,12 +15,12 @@ public class Menus {
         throw new AssertionError();
     }
     
-    private static MenuHandle newMenuHandle(Plugin plugin, Sign sign, MenuView view) {
+    private static MenuHandle newMenuHandle(Plugin plugin, MenuView view) {
         return new DefaultHandle(plugin, new DefaultMenu(plugin), view);
     }
     
     public static MenuHandle newMenuHandle(Plugin plugin, Sign sign) {
-        return newMenuHandle(plugin, sign, new DefaultSignView(plugin, sign));
+        return newMenuHandle(plugin, new DefaultSignView(plugin, sign));
     }
     
     public static MenuHandle newMenuHandle(Plugin plugin, Sign sign, Class<? extends MenuView> viewClass)
@@ -46,7 +46,7 @@ public class Menus {
             throw new IllegalArgumentException(viewClass.getName() + " is not a valid MenuView");
         }
         try {
-            return newMenuHandle(plugin, sign, view);
+            return newMenuHandle(plugin, view);
         } catch (NullPointerException e) {
             throw new IllegalArgumentException(viewClass.getName() + " is not a valid MenuView");
         }

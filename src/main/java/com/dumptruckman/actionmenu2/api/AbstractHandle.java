@@ -106,7 +106,7 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
-    public final MenuContents<MenuItem> getContents() {
+    public final MenuContents getContents() {
         return this.getMenu().getContents();
     }
 

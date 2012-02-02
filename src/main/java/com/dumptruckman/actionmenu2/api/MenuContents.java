@@ -5,7 +5,7 @@ import com.dumptruckman.actionmenu2.api.event.MenuContentsListener;
 import java.util.Collection;
 import java.util.List;
 
-public interface MenuContents<E extends MenuItem> extends List<E> {
+public interface MenuContents extends List<MenuItem> {
     
     int getSelectedIndex();
 
@@ -35,7 +35,7 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      *                                       prevents it from being added to this list
      */
     @Override
-    boolean add(E e);
+    boolean add(MenuItem e);
 
     /**
      * Removes the first occurrence of the specified element from this list,
@@ -81,7 +81,7 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      * @see #add(Object)
      */
     @Override
-    boolean addAll(Collection<? extends E> c);
+    boolean addAll(Collection<? extends MenuItem> c);
 
     /**
      * Inserts all of the elements in the specified collection into this
@@ -111,7 +111,7 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    boolean addAll(int index, Collection<? extends E> c);
+    boolean addAll(int index, Collection<? extends MenuItem> c);
 
     /**
      * Removes from this list all of its elements that are contained in the
@@ -182,7 +182,7 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    E set(int index, E element);
+    MenuItem set(int index, MenuItem element);
 
     /**
      * Inserts the specified element at the specified position in this list
@@ -206,7 +206,7 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    void add(int index, E element);
+    void add(int index, MenuItem element);
 
     /**
      * Removes the element at the specified position in this list (optional
@@ -222,5 +222,5 @@ public interface MenuContents<E extends MenuItem> extends List<E> {
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    E remove(int index);
+    MenuItem remove(int index);
 }

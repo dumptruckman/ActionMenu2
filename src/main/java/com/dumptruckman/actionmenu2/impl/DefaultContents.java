@@ -10,20 +10,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-class DefaultContents<E extends MenuItem> extends ForwardingList<E>
-        implements MenuContents<E> {
+class DefaultContents extends ForwardingList<MenuItem>
+        implements MenuContents {
 
     private final List<MenuContentsListener> listeners;
     private int selectedIndex;
 
-    protected DefaultContents(final List<E> contents) {
+    protected DefaultContents(final List<MenuItem> contents) {
         super(contents);
         this.listeners = new ArrayList<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
     }
 
     protected DefaultContents() {
-        this(new ArrayList<E>());
+        this(new ArrayList<MenuItem>());
     }
 
     @Override
@@ -46,7 +46,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     }
 
     @Override
-    public final boolean add(final E e) {
+    public final boolean add(final MenuItem e) {
         int index = this.size();
         boolean added = super.add(e);
         if (added) {
@@ -63,7 +63,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     }
 
     @Override
-    public final void add(final int index, final E e) {
+    public final void add(final int index, final MenuItem e) {
         super.add(index, e);
         for (MenuContentsListener listener : this.listeners) {
             listener.onContentsAdd(new MenuContentsEvent(this,
@@ -95,7 +95,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     }
 
     @Override
-    public final boolean addAll(final Collection<? extends E> c) {
+    public final boolean addAll(final Collection<? extends MenuItem> c) {
         int index0 = this.size();
         boolean added = super.addAll(c);
         int index1 = this.size();
@@ -114,7 +114,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
 
     @Override
     public final boolean addAll(final int index,
-                                final Collection<? extends E> c) {
+                                final Collection<? extends MenuItem> c) {
         boolean added = super.addAll(index, c);
         int index1 = index + c.size();
         if (added) {
@@ -134,7 +134,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
 
     @Override
     public final boolean removeAll(final Collection<?> c) {
-        E newSelectedItem = null;
+        MenuItem newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
             if (!c.contains(this.get(i))) {
                 newSelectedItem = this.get(i);
@@ -163,7 +163,7 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
 
     @Override
     public final boolean retainAll(final Collection<?> c) {
-        E newSelectedItem = null;
+        MenuItem newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
             if (c.contains(this.get(i))) {
                 newSelectedItem = this.get(i);
@@ -203,8 +203,8 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     }
 
     @Override
-    public final E set(final int index, final E element) {
-        E e = super.set(index, element);
+    public final MenuItem set(final int index, final MenuItem element) {
+        MenuItem e = super.set(index, element);
         for (MenuContentsListener listener : this.listeners) {
             listener.onContentsChange(new MenuContentsEvent(this,
                     MenuContentsEvent.CONTENTS_CHANGED,
@@ -214,8 +214,8 @@ class DefaultContents<E extends MenuItem> extends ForwardingList<E>
     }
 
     @Override
-    public final E remove(final int index) {
-        E e = super.remove(index);
+    public final MenuItem remove(final int index) {
+        MenuItem e = super.remove(index);
         for (MenuContentsListener listener : this.listeners) {
             listener.onContentsChange(new MenuContentsEvent(this,
                     MenuContentsEvent.CONTENTS_REMOVED,

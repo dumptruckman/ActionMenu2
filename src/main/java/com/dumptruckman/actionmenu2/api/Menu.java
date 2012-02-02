@@ -7,7 +7,7 @@ import java.util.Set;
 public interface Menu extends MenuInterface {
 
     // TODO consider MenuModel interface for getContents()
-    MenuContents<MenuItem> getContents();
+    MenuContents getContents();
     
     MenuItem getSelected();
 

@@ -3,6 +3,7 @@ package com.dumptruckman.actionmenu2.impl;
 import com.dumptruckman.actionmenu2.api.AbstractHandle;
 import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuContents;
+import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import org.bukkit.plugin.Plugin;
 
@@ -33,5 +34,8 @@ class DefaultHandle extends AbstractHandle {
             index = contents.size() - 1;
         }
         contents.setSelectedIndex(index);
+        if (!contents.get(index).isSelectable()) {
+
+        }
     }
 }

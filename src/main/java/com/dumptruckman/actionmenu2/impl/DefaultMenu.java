@@ -14,22 +14,22 @@ import java.util.Set;
 
 class DefaultMenu implements Menu {
 
-    private MenuContents<MenuItem> contents;
+    private MenuContents contents;
     private Set<MenuListener> listeners = new LinkedHashSet<MenuListener>();
     private Plugin plugin = null;
     private Player player = null;
 
-    protected DefaultMenu(Plugin plugin, final MenuContents<MenuItem> c) {
+    protected DefaultMenu(Plugin plugin, final MenuContents c) {
         this.plugin = plugin;
         this.contents = c;
     }
 
     protected DefaultMenu(Plugin plugin) {
-        this(plugin, new DefaultContents<MenuItem>());
+        this(plugin, new DefaultContents());
     }
 
     @Override
-    public MenuContents<MenuItem> getContents() {
+    public MenuContents getContents() {
         return this.contents;
     }
 
