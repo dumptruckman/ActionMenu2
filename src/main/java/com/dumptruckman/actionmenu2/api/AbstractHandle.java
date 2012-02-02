@@ -36,7 +36,7 @@ public abstract class AbstractHandle implements MenuHandle {
     }
 
     @Override
-    public abstract void cycleMenu(final Boolean reverse);
+    public abstract void cycleMenu(final boolean reverse);
 
     @Override
     public final void setMenu(Menu menu) {

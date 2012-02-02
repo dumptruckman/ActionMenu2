@@ -3,7 +3,6 @@ package com.dumptruckman.actionmenu2.impl;
 import com.dumptruckman.actionmenu2.api.AbstractHandle;
 import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuContents;
-import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import org.bukkit.plugin.Plugin;
 
@@ -18,24 +17,24 @@ class DefaultHandle extends AbstractHandle {
     }
 
     @Override
-    public final void cycleMenu(final Boolean reverse) {
+    public final void cycleMenu(final boolean reverse) {
         MenuContents contents = this.getMenu().getContents();
-        int index = contents.getSelectedIndex();
-        if (reverse) {
-            index--;
-        } else {
-            index++;
-        }
         if (contents.isEmpty()) {
-            index = -1;
-        } else if (index >= contents.size()) {
-            index = 0;
-        } else if (index < 0) {
-            index = contents.size() - 1;
+            contents.setSelectedIndex(-1);
+            return;
+        }
+        int index = contents.getSelectedIndex();
+        for (int step = reverse ? -1 : 1, newIndex = index + step; newIndex != index;
+                newIndex = this.stepModulo(newIndex, step, contents.size())) {
+            if (contents.get(newIndex).isSelectable()) {
+                index = newIndex;
+                break;
+            }
         }
         contents.setSelectedIndex(index);
-        if (!contents.get(index).isSelectable()) {
+    }
 
-        }
+    private int stepModulo(int index, int step, int size) {
+        return (index + step + size) % size;
     }
 }

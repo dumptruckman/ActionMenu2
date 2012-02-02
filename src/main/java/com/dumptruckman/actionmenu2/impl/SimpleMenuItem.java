@@ -20,8 +20,8 @@ public class SimpleMenuItem implements MenuItem {
     private Player player = null;
     private Plugin plugin;
     private boolean selectable = true;
-    
-    public SimpleMenuItem(Plugin plugin) {
+
+    public SimpleMenuItem(final Plugin plugin) {
         this.plugin = plugin;
     }
 

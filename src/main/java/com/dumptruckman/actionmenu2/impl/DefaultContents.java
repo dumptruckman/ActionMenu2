@@ -16,7 +16,7 @@ class DefaultContents extends ForwardingList<MenuItem>
     private final List<MenuContentsListener> listeners;
     private int selectedIndex;
 
-    protected DefaultContents(final List<MenuItem> contents) {
+    private DefaultContents(final List<MenuItem> contents) {
         super(contents);
         this.listeners = new ArrayList<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
@@ -36,6 +36,9 @@ class DefaultContents extends ForwardingList<MenuItem>
         if (index < -1 || index >= this.size()) {
             throw new IndexOutOfBoundsException();
         }
+        if (!this.get(index).isSelectable()) {
+            return;
+        }
         int oldIndex = this.selectedIndex;
         this.selectedIndex = index;
         for (MenuContentsListener listener : this.listeners) {
@@ -50,13 +53,13 @@ class DefaultContents extends ForwardingList<MenuItem>
         int index = this.size();
         boolean added = super.add(e);
         if (added) {
+            if (e.isSelectable() && this.getSelectedIndex() == -1) {
+                this.setSelectedIndex(this.size() - 1);
+            }
             for (MenuContentsListener listener : this.listeners) {
                 listener.onContentsAdd(new MenuContentsEvent(this,
                         MenuContentsEvent.CONTENTS_ADDED,
                         index, index));
-            }
-            if (this.getSelectedIndex() == -1) {
-                this.setSelectedIndex(0);
             }
         }
         return added;
@@ -70,8 +73,8 @@ class DefaultContents extends ForwardingList<MenuItem>
                     MenuContentsEvent.CONTENTS_ADDED,
                     index, index));
         }
-        if (this.getSelectedIndex() == -1) {
-            this.setSelectedIndex(0);
+        if (this.getSelectedIndex() == -1 && e.isSelectable()) {
+            this.setSelectedIndex(index);
         } else if (this.getSelectedIndex() >= index) {
             this.setSelectedIndex(this.getSelectedIndex() + 1);
         }
@@ -106,7 +109,7 @@ class DefaultContents extends ForwardingList<MenuItem>
                         index0, index1));
             }
             if (this.getSelectedIndex() == -1) {
-                this.setSelectedIndex(0);
+                this.setSelectedIndex(this.getFirstSelectableIndex());
             }
         }
         return added;
@@ -124,7 +127,7 @@ class DefaultContents extends ForwardingList<MenuItem>
                         index, index1));
             }
             if (this.getSelectedIndex() == -1) {
-                this.setSelectedIndex(0);
+                this.setSelectedIndex(this.getFirstSelectableIndex());
             } else if (this.getSelectedIndex() >= index) {
                 this.setSelectedIndex(this.getSelectedIndex() + c.size());
             }
@@ -136,7 +139,7 @@ class DefaultContents extends ForwardingList<MenuItem>
     public final boolean removeAll(final Collection<?> c) {
         MenuItem newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
-            if (!c.contains(this.get(i))) {
+            if (this.get(i).isSelectable() && !c.contains(this.get(i))) {
                 newSelectedItem = this.get(i);
                 break;
             }
@@ -149,11 +152,7 @@ class DefaultContents extends ForwardingList<MenuItem>
                         -1, -1));
             }
             if (newSelectedItem == null) {
-                if (this.size() > 0) {
-                    this.setSelectedIndex(0);
-                } else {
-                    this.setSelectedIndex(-1);
-                }
+                this.setSelectedIndex(this.getFirstSelectableIndex());
             } else {
                 this.setSelectedIndex(this.indexOf(newSelectedItem));
             }
@@ -165,7 +164,7 @@ class DefaultContents extends ForwardingList<MenuItem>
     public final boolean retainAll(final Collection<?> c) {
         MenuItem newSelectedItem = null;
         for (int i = this.getSelectedIndex(); i >= 0; i--) {
-            if (c.contains(this.get(i))) {
+            if (this.get(i).isSelectable() && c.contains(this.get(i))) {
                 newSelectedItem = this.get(i);
                 break;
             }
@@ -178,11 +177,7 @@ class DefaultContents extends ForwardingList<MenuItem>
                         -1, -1));
             }
             if (newSelectedItem == null) {
-                if (this.size() > 0) {
-                    this.setSelectedIndex(0);
-                } else {
-                    this.setSelectedIndex(-1);
-                }
+                this.setSelectedIndex(this.getFirstSelectableIndex());
             } else {
                 this.setSelectedIndex(this.indexOf(newSelectedItem));
             }
@@ -205,6 +200,9 @@ class DefaultContents extends ForwardingList<MenuItem>
     @Override
     public final MenuItem set(final int index, final MenuItem element) {
         MenuItem e = super.set(index, element);
+        if (this.getSelectedIndex() == index && !element.isSelectable()) {
+            this.setSelectedIndex(this.getPreviousSelectableIndex(index));
+        }
         for (MenuContentsListener listener : this.listeners) {
             listener.onContentsChange(new MenuContentsEvent(this,
                     MenuContentsEvent.CONTENTS_CHANGED,
@@ -222,12 +220,26 @@ class DefaultContents extends ForwardingList<MenuItem>
                     index, index));
         }
         if (this.getSelectedIndex() == index) {
-            if (this.getSelectedIndex() - 1 >= 0) {
-                this.setSelectedIndex(this.getSelectedIndex() - 1);
-            } else if (this.getSelectedIndex() >= this.size()) {
-                this.setSelectedIndex(this.size() - 1);
-            }
+            this.setSelectedIndex(this.getPreviousSelectableIndex(index));
         }
         return e;
+    }
+
+    private int getFirstSelectableIndex() {
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i).isSelectable()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private int getPreviousSelectableIndex(int index) {
+        for (int i = index - 1; i >= 0; i--) {
+            if (this.get(i).isSelectable()) {
+                return i;
+            }
+        }
+        return getFirstSelectableIndex();
     }
 }

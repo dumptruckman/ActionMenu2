@@ -6,7 +6,7 @@ public interface MenuHandle extends Menu, MenuView, MenuContainer, MenuInterface
 
     void cycleMenu();
 
-    void cycleMenu(Boolean reverse);
+    void cycleMenu(boolean reverse);
 
     Set<MenuView> getViews();
     
