@@ -41,7 +41,7 @@ class DefaultHandle extends AbstractHandle {
 
     private int stepModulo(int index, int step, int size) {
         int newIndex = index + step;
-        if (step >= size) {
+        if (newIndex >= size) {
             newIndex = -1;
         } else if (newIndex < -1) {
             newIndex = size - 1;
