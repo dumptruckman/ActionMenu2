@@ -1,6 +1,7 @@
 package com.dumptruckman.actionmenu2.api;
 
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import org.bukkit.block.Block;
 
 import java.awt.Image;
 import java.util.List;
@@ -23,6 +24,8 @@ public interface MenuItem extends MenuInterface {
     List<String> getLines();
 
     Image getImage();
+    
+    List<Block> getBlocks();
 
     void setSelectable(boolean selectable);
 

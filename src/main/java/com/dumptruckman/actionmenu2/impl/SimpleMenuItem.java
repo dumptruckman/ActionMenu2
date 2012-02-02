@@ -3,10 +3,12 @@ package com.dumptruckman.actionmenu2.impl;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.event.MenuItemChangeEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuItemListener;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -17,6 +19,7 @@ public class SimpleMenuItem implements MenuItem {
     private final Set<MenuItemListener> listeners = new LinkedHashSet<MenuItemListener>();
     private List<String> text = null;
     private Image image = null;
+    private final List<Block> blocks = new ArrayList<Block>();
     private Player player = null;
     private Plugin plugin;
     private boolean selectable = true;
@@ -117,5 +120,9 @@ public class SimpleMenuItem implements MenuItem {
     @Override
     public final boolean isSelectable() {
         return this.selectable;
+    }
+    
+    public final List<Block> getBlocks() {
+        return this.blocks;
     }
 }
