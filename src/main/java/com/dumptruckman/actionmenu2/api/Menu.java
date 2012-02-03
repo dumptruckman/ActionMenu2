@@ -2,11 +2,11 @@ package com.dumptruckman.actionmenu2.api;
 
 import org.bukkit.entity.Player;
 
-import java.util.Set;
-
 public interface Menu {
 
-    MenuContents getContents();
+    MenuModel getModel();
+
+    void setModel(MenuModel model);
     
     MenuItem getSelected();
 

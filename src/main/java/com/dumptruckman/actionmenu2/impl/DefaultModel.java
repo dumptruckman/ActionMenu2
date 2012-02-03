@@ -1,6 +1,6 @@
 package com.dumptruckman.actionmenu2.impl;
 
-import com.dumptruckman.actionmenu2.api.MenuContents;
+import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.event.MenuContentsEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuContentsListener;
@@ -12,19 +12,19 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-class DefaultContents extends ForwardingList<MenuItem>
-        implements MenuContents {
+class DefaultModel extends ForwardingList<MenuItem>
+        implements MenuModel {
 
     private final Set<MenuContentsListener> listeners;
     private int selectedIndex;
 
-    private DefaultContents(final List<MenuItem> contents) {
+    private DefaultModel(final List<MenuItem> contents) {
         super(contents);
         this.listeners = new LinkedHashSet<MenuContentsListener>();
         this.selectedIndex = this.size() - 1;
     }
 
-    protected DefaultContents() {
+    protected DefaultModel() {
         this(new ArrayList<MenuItem>());
     }
 

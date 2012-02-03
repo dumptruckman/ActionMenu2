@@ -1,7 +1,7 @@
 package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.Menu;
-import com.dumptruckman.actionmenu2.api.MenuContents;
+import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.MenuViews;
@@ -10,21 +10,21 @@ import org.bukkit.plugin.Plugin;
 
 class DefaultMenu implements Menu {
 
-    private MenuContents contents;
+    private MenuModel model;
     private Plugin plugin = null;
     private Player player = null;
     private MenuViews views = new DefaultMenuViews();
 
-    protected DefaultMenu(Plugin p, final MenuContents c, final MenuView v) {
+    protected DefaultMenu(Plugin p, final MenuModel m, final MenuView v) {
         this.plugin = p;
-        this.contents = c;
+        this.model = m;
         if (v != null) {
             this.views.add(v);
         }
     }
 
     protected DefaultMenu(Plugin plugin, MenuView v) {
-        this(plugin, new DefaultContents(), v);
+        this(plugin, new DefaultModel(), v);
     }
 
     protected DefaultMenu(Plugin plugin) {
@@ -32,16 +32,21 @@ class DefaultMenu implements Menu {
     }
 
     @Override
-    public MenuContents getContents() {
-        return this.contents;
+    public MenuModel getModel() {
+        return this.model;
+    }
+
+    @Override
+    public void setModel(MenuModel model) {
+        this.model = model;
     }
 
     @Override
     public MenuItem getSelected() {
-        if (this.getContents().getSelectedIndex() < 0) {
+        if (this.getModel().getSelectedIndex() < 0) {
             return null;
         }
-        return this.getContents().get(this.getContents().getSelectedIndex());
+        return this.getModel().get(this.getModel().getSelectedIndex());
     }
 
     @Override
@@ -51,25 +56,25 @@ class DefaultMenu implements Menu {
 
     @Override
     public final void cycleSelection(final boolean reverse) {
-        MenuContents contents = this.getContents();
-        if (contents.isEmpty()) {
-            contents.setSelectedIndex(-1);
+        MenuModel model = this.getModel();
+        if (model.isEmpty()) {
+            model.setSelectedIndex(-1);
             return;
         }
-        int index = contents.getSelectedIndex();
+        int index = model.getSelectedIndex();
         for (int step = reverse ? -1 : 1,
-                     newIndex = selectionStep(index, step, contents.size());
+                     newIndex = selectionStep(index, step, model.size());
              newIndex != index;
-             newIndex = this.selectionStep(newIndex, step, contents.size())) {
+             newIndex = this.selectionStep(newIndex, step, model.size())) {
             if (newIndex < 0) {
                 continue;
             }
-            if (contents.get(newIndex).isSelectable()) {
+            if (model.get(newIndex).isSelectable()) {
                 index = newIndex;
                 break;
             }
         }
-        contents.setSelectedIndex(index);
+        model.setSelectedIndex(index);
         this.getSelected().update(this.getUser());
     }
 

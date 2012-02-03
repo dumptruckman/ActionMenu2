@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface MenuContents extends List<MenuItem> {
+public interface MenuModel extends List<MenuItem> {
     
     int getSelectedIndex();
 

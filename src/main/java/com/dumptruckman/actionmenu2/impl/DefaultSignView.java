@@ -17,9 +17,9 @@ class DefaultSignView extends AbstractSignView {
             throw new IllegalArgumentException("Menu may not be null!");
         }
         Sign sign = this.getSign();
-        for(int i = 0; i < menu.getContents().size() && i < 4; i++) {
-            String text = menu.getContents().get(i).getText();
-            if (menu.getContents().getSelectedIndex() == i) {
+        for(int i = 0; i < menu.getModel().size() && i < 4; i++) {
+            String text = menu.getModel().get(i).getText();
+            if (menu.getModel().getSelectedIndex() == i) {
                 text = "> " + text;
             } else {
                 text = "  " + text;

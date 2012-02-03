@@ -48,9 +48,9 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
             MenuItem scoop = new SimpleMenuItem();
             scoop.setText("scoop");
 
-            menu.getContents().add(test);
-            menu.getContents().add(poop);
-            menu.getContents().add(scoop);
+            menu.getModel().add(test);
+            menu.getModel().add(poop);
+            menu.getModel().add(scoop);
             menu.setUser(event.getPlayer());
             this.block = event.getBlock();
         }
