@@ -11,7 +11,7 @@ public interface MenuViews extends Iterable<MenuView> {
 
     boolean remove(MenuView view);
 
-    void update(Plugin plugin, Menu menu, Player player);
+    void update(Player player);
 
     @Override
     Iterator<MenuView> iterator();

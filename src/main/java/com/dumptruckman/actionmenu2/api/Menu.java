@@ -19,4 +19,6 @@ public interface Menu {
     void setUser(Player player);
 
     Player getUser();
+    
+    void updateViews();
 }

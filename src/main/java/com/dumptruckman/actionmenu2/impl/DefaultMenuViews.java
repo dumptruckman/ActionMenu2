@@ -13,6 +13,13 @@ import java.util.Set;
 class DefaultMenuViews implements MenuViews {
 
     private Set<MenuView> views = new LinkedHashSet<MenuView>();
+    private Plugin plugin;
+    private Menu menu;
+    
+    public DefaultMenuViews(Plugin plugin, Menu menu) {
+        this.plugin = plugin;
+        this.menu = menu;
+    }
 
     @Override
     public boolean add(MenuView view) {
@@ -28,9 +35,9 @@ class DefaultMenuViews implements MenuViews {
     }
 
     @Override
-    public void update(Plugin plugin, Menu menu, Player player) {
+    public void update(Player player) {
         for (MenuView view : this.views) {
-            view.update(plugin, menu, player);
+            view.update(this.plugin, this.menu, player);
         }
     }
 

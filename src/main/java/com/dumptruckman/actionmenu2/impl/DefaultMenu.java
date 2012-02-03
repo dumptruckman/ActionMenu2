@@ -13,14 +13,18 @@ class DefaultMenu implements Menu {
     private MenuModel model;
     private Plugin plugin = null;
     private Player player = null;
-    private MenuViews views = new DefaultMenuViews();
+    private MenuViews views;
 
     protected DefaultMenu(Plugin p, MenuModel m) {
         if (m == null) {
             throw new IllegalArgumentException("Model may not be null!");
         }
+        if (p == null) {
+            throw new IllegalArgumentException("Plugin may not be null!");
+        }
         this.plugin = p;
         this.model = m;
+        this.views = new DefaultMenuViews(p, this);
     }
 
     protected DefaultMenu(Plugin p, final MenuModel m, final MenuView v) {
@@ -101,7 +105,6 @@ class DefaultMenu implements Menu {
     @Override
     public void setUser(Player player) {
         this.player = player;
-        this.views.update(this.getPlugin(), this, player);
     }
 
     protected Plugin getPlugin() {
@@ -116,5 +119,10 @@ class DefaultMenu implements Menu {
     @Override
     public MenuViews getViews() {
         return this.views;
+    }
+    
+    @Override
+    public void updateViews() {
+        this.views.update(this.getUser());
     }
 }
