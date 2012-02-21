@@ -2,7 +2,7 @@ package com.dumptruckman.actionmenu2.api.event;
 
 import java.util.EventObject;
 
-public class MenuContentsEvent extends EventObject {
+public class MenuEvent extends EventObject {
 
     public final static int CONTENTS_CHANGED = 0;
     public final static int CONTENTS_ADDED = 1;
@@ -13,7 +13,7 @@ public class MenuContentsEvent extends EventObject {
     private int index0;
     private int index1;
     
-    public MenuContentsEvent(Object source, int type, int index0, int index1) {
+    public MenuEvent(Object source, int type, int index0, int index1) {
         super(source);
         this.type = type;
         this.index0 = index0;

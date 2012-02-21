@@ -1,8 +1,8 @@
 package com.dumptruckman.actionmenu2.api.event;
 
-public interface MenuItemListener {
+public class MenuItemListener {
 
-    void onAction(MenuItemEvent event);
+    public void onAction(MenuItemEvent event) { }
 
-    void onMenuItemChange(MenuItemEvent event);
+    public void onMenuItemChange(MenuItemEvent event) { }
 }

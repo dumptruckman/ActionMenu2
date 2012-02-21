@@ -2,8 +2,8 @@ package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.MenuItem;
-import com.dumptruckman.actionmenu2.api.event.MenuContentsEvent;
-import com.dumptruckman.actionmenu2.api.event.MenuContentsListener;
+import com.dumptruckman.actionmenu2.api.event.MenuEvent;
+import com.dumptruckman.actionmenu2.api.event.MenuListener;
 import com.dumptruckman.actionmenu2.api.util.ForwardingList;
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import java.util.Set;
 class DefaultModel extends ForwardingList<MenuItem>
         implements MenuModel {
 
-    private final Set<MenuContentsListener> listeners;
+    private final Set<MenuListener> listeners;
     private int selectedIndex;
 
     private DefaultModel(final List<MenuItem> contents) {
         super(contents);
-        this.listeners = new LinkedHashSet<MenuContentsListener>();
+        this.listeners = new LinkedHashSet<MenuListener>();
         this.selectedIndex = this.size() - 1;
     }
 
@@ -43,9 +43,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         }
         int oldIndex = this.selectedIndex;
         this.selectedIndex = index;
-        for (MenuContentsListener listener : this.listeners) {
-            listener.onSelectionChange(new MenuContentsEvent(this,
-                    MenuContentsEvent.SELECTION_CHANGED,
+        for (MenuListener listener : this.listeners) {
+            listener.onSelectionChange(new MenuEvent(this,
+                    MenuEvent.SELECTION_CHANGED,
                     oldIndex, index));
         }
     }
@@ -58,9 +58,9 @@ class DefaultModel extends ForwardingList<MenuItem>
             if (e.isSelectable() && this.getSelectedIndex() == -1) {
                 this.setSelectedIndex(this.size() - 1);
             }
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_ADDED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsAdd(new MenuEvent(this,
+                        MenuEvent.CONTENTS_ADDED,
                         index, index));
             }
         }
@@ -70,9 +70,9 @@ class DefaultModel extends ForwardingList<MenuItem>
     @Override
     public final void add(final int index, final MenuItem e) {
         super.add(index, e);
-        for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsAdd(new MenuContentsEvent(this,
-                    MenuContentsEvent.CONTENTS_ADDED,
+        for (MenuListener listener : this.listeners) {
+            listener.onContentsAdd(new MenuEvent(this,
+                    MenuEvent.CONTENTS_ADDED,
                     index, index));
         }
         if (this.getSelectedIndex() == -1 && e.isSelectable()) {
@@ -87,9 +87,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         int index = this.indexOf(o);
         boolean removed = super.remove(o);
         if (removed) {
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsRemove(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_REMOVED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsRemove(new MenuEvent(this,
+                        MenuEvent.CONTENTS_REMOVED,
                         index, index));
             }
             if (this.getSelectedIndex() >= this.size()) {
@@ -105,9 +105,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         boolean added = super.addAll(c);
         int index1 = this.size();
         if (added) {
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_ADDED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsAdd(new MenuEvent(this,
+                        MenuEvent.CONTENTS_ADDED,
                         index0, index1));
             }
             if (this.getSelectedIndex() == -1) {
@@ -123,9 +123,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         boolean added = super.addAll(index, c);
         int index1 = index + c.size();
         if (added) {
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsAdd(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_ADDED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsAdd(new MenuEvent(this,
+                        MenuEvent.CONTENTS_ADDED,
                         index, index1));
             }
             if (this.getSelectedIndex() == -1) {
@@ -148,9 +148,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         }
         boolean removed = super.removeAll(c);
         if (removed) {
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsChange(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_CHANGED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsChange(new MenuEvent(this,
+                        MenuEvent.CONTENTS_CHANGED,
                         -1, -1));
             }
             if (newSelectedItem == null) {
@@ -173,9 +173,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         }
         boolean removed = super.retainAll(c);
         if (removed) {
-            for (MenuContentsListener listener : this.listeners) {
-                listener.onContentsChange(new MenuContentsEvent(this,
-                        MenuContentsEvent.CONTENTS_CHANGED,
+            for (MenuListener listener : this.listeners) {
+                listener.onContentsChange(new MenuEvent(this,
+                        MenuEvent.CONTENTS_CHANGED,
                         -1, -1));
             }
             if (newSelectedItem == null) {
@@ -191,9 +191,9 @@ class DefaultModel extends ForwardingList<MenuItem>
     public final void clear() {
         int index1 = this.size();
         super.clear();
-        for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this,
-                    MenuContentsEvent.CONTENTS_REMOVED,
+        for (MenuListener listener : this.listeners) {
+            listener.onContentsChange(new MenuEvent(this,
+                    MenuEvent.CONTENTS_REMOVED,
                     0, index1));
         }
         this.setSelectedIndex(-1);
@@ -205,9 +205,9 @@ class DefaultModel extends ForwardingList<MenuItem>
         if (this.getSelectedIndex() == index && !element.isSelectable()) {
             this.setSelectedIndex(this.getPreviousSelectableIndex(index));
         }
-        for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this,
-                    MenuContentsEvent.CONTENTS_CHANGED,
+        for (MenuListener listener : this.listeners) {
+            listener.onContentsChange(new MenuEvent(this,
+                    MenuEvent.CONTENTS_CHANGED,
                     index, index));
         }
         return e;
@@ -216,9 +216,9 @@ class DefaultModel extends ForwardingList<MenuItem>
     @Override
     public final MenuItem remove(final int index) {
         MenuItem e = super.remove(index);
-        for (MenuContentsListener listener : this.listeners) {
-            listener.onContentsChange(new MenuContentsEvent(this,
-                    MenuContentsEvent.CONTENTS_REMOVED,
+        for (MenuListener listener : this.listeners) {
+            listener.onContentsChange(new MenuEvent(this,
+                    MenuEvent.CONTENTS_REMOVED,
                     index, index));
         }
         if (this.getSelectedIndex() == index) {
@@ -246,7 +246,7 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public Set<MenuContentsListener> getMenuContentsListeners() {
+    public Set<MenuListener> getMenuContentsListeners() {
         return this.listeners;
     }
 }

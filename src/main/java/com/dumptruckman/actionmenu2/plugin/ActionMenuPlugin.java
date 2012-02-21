@@ -96,7 +96,7 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         }
     }
 
-    private class TestMenuItemListener implements MenuItemListener {
+    private class TestMenuItemListener extends MenuItemListener {
         public void onAction(final MenuItemEvent event) {
             if (event.getSender() != null
                     && event.getSender() instanceof Player) {
@@ -107,10 +107,6 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
                         .add(direction.getX(), direction.getY(),
                         direction.getZ()), Fireball.class);
             }
-        }
-        
-        public void onMenuItemChange(final MenuItemEvent event) {
-
         }
     }
 }
