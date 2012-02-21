@@ -15,6 +15,7 @@ public class MenuEvent {
     private int index1;
     
     public MenuEvent(MenuModel model, int type, int index0, int index1) {
+        this.model = model;
         this.type = type;
         this.index0 = index0;
         this.index1 = index1;
