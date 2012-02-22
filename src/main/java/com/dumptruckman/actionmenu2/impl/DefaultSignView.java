@@ -11,7 +11,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class DefaultSignView extends AbstractSignView implements MenuListener {
+public class DefaultSignView  extends AbstractSignView {
 
     public static final long UPDATE_TICKS = 7;
     public static final int SIGN_LINES = 4;
@@ -102,15 +102,6 @@ public class DefaultSignView extends AbstractSignView implements MenuListener {
             this.leadIndex = 0;
         }
     }
-
-    @Override
-    public void onContentsAdd(MenuEvent menuEvent) { }
-
-    @Override
-    public void onContentsRemove(MenuEvent menuEvent) { }
-
-    @Override
-    public void onContentsChange(MenuEvent menuEvent) { }
 
     private class TickerTask implements Runnable {
 
