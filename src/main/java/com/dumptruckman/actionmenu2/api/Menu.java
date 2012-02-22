@@ -1,8 +1,11 @@
 package com.dumptruckman.actionmenu2.api;
 
+import com.dumptruckman.actionmenu2.api.event.MenuListener;
 import org.bukkit.entity.Player;
 
-public interface Menu {
+import java.util.Set;
+
+public interface Menu extends MenuListener {
 
     MenuModel getModel();
 
@@ -21,4 +24,6 @@ public interface Menu {
     Player getUser();
     
     void updateViews();
+
+    Set<MenuListener> getMenuListeners();
 }

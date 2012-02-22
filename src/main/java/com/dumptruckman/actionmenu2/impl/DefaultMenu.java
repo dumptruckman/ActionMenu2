@@ -5,8 +5,12 @@ import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.MenuViews;
+import com.dumptruckman.actionmenu2.api.event.MenuEvent;
+import com.dumptruckman.actionmenu2.api.event.MenuListener;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 class DefaultMenu implements Menu {
 
@@ -25,6 +29,8 @@ class DefaultMenu implements Menu {
         this.plugin = p;
         this.model = m;
         this.views = new DefaultMenuViews(p, this);
+        
+        this.model.getMenuListeners().add(this);
     }
 
     protected DefaultMenu(Plugin p, final MenuModel m, final MenuView v) {
@@ -52,7 +58,15 @@ class DefaultMenu implements Menu {
         if (model == null) {
             throw new IllegalArgumentException("model may not be null!");
         }
+        this.getMenuListeners().remove(this);
+        for (MenuView view : this.views) {
+            this.getMenuListeners().remove(view);
+        }
         this.model = model;
+        this.getMenuListeners().add(this);
+        for (MenuView view : this.views) {
+            this.getMenuListeners().add(view);
+        }
     }
 
     @Override
@@ -124,5 +138,30 @@ class DefaultMenu implements Menu {
     @Override
     public void updateViews() {
         this.views.update(this.getUser());
+    }
+
+    @Override
+    public Set<MenuListener> getMenuListeners() {
+        return this.getModel().getMenuListeners();
+    }
+
+    @Override
+    public void onContentsAdd(MenuEvent event) {
+
+    }
+
+    @Override
+    public void onContentsRemove(MenuEvent event) {
+
+    }
+
+    @Override
+    public void onContentsChange(MenuEvent event) {
+
+    }
+
+    @Override
+    public void onSelectionChange(MenuEvent event) {
+
     }
 }

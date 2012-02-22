@@ -6,7 +6,6 @@ import com.dumptruckman.actionmenu2.api.MenuView;
 import org.bukkit.block.Sign;
 import org.bukkit.plugin.Plugin;
 
-import javax.management.modelmbean.ModelMBean;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -29,7 +28,11 @@ public class Menus {
     }
     
     public static Menu newMenu(Plugin plugin, Sign sign) {
-        return newMenu(plugin, new DefaultSignView(sign));
+        Menu menu = newMenu(plugin);
+        DefaultSignView view = new DefaultSignView(plugin, sign);
+        menu.getModel().getMenuListeners().add(view);
+        menu.getViews().add(view);
+        return menu;
     }
     
     public static Menu newMenu(Plugin plugin, Sign sign, Class<? extends MenuView> viewClass)

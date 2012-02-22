@@ -26,12 +26,20 @@ class DefaultMenuViews implements MenuViews {
         if (view == null) {
             throw new IllegalArgumentException("view may not be null!");
         }
-        return this.views.add(view);
+        boolean added = this.views.add(view);
+        if (added) {
+            menu.getMenuListeners().add(view);
+        }
+        return added;
     }
 
     @Override
     public boolean remove(MenuView view) {
-        return this.views.remove(view);
+        boolean removed = this.views.remove(view);
+        if (removed) {
+            menu.getMenuListeners().remove(view);
+        }
+        return removed;
     }
 
     @Override

@@ -246,7 +246,7 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public Set<MenuListener> getMenuContentsListeners() {
+    public Set<MenuListener> getMenuListeners() {
         return this.listeners;
     }
 }

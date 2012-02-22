@@ -225,5 +225,5 @@ public interface MenuModel extends List<MenuItem> {
     @Override
     MenuItem remove(int index);
     
-    Set<MenuListener> getMenuContentsListeners();
+    Set<MenuListener> getMenuListeners();
 }
