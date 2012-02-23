@@ -5,6 +5,7 @@ import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.event.MenuEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
+import com.dumptruckman.actionmenu2.api.event.ModelChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
@@ -104,6 +105,11 @@ public class DefaultSignView extends AbstractSignView {
         if (this.leadIndex < 0) {
             this.leadIndex = 0;
         }
+    }
+
+    @Override
+    public void onModelChange(ModelChangeEvent event) {
+        this.leadIndex = 0;
     }
 
     private class TickerTask implements Runnable {
