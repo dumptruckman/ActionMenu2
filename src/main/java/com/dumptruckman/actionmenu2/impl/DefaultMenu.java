@@ -7,6 +7,7 @@ import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.MenuViews;
 import com.dumptruckman.actionmenu2.api.event.MenuEvent;
 import com.dumptruckman.actionmenu2.api.event.MenuListener;
+import com.dumptruckman.actionmenu2.api.event.ModelChangeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -62,10 +63,14 @@ class DefaultMenu implements Menu {
         for (MenuView view : this.views) {
             this.getMenuListeners().remove(view);
         }
+        ModelChangeEvent event = new ModelChangeEvent(this.model, model);
         this.model = model;
         this.getMenuListeners().add(this);
         for (MenuView view : this.views) {
             this.getMenuListeners().add(view);
+        }
+        for (MenuListener listener : getMenuListeners()) {
+            listener.onModelChange(event);
         }
     }
 
@@ -164,7 +169,12 @@ class DefaultMenu implements Menu {
     public void onSelectionChange(MenuEvent event) {
 
     }
-    
+
+    @Override
+    public void onModelChange(ModelChangeEvent event) {
+
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

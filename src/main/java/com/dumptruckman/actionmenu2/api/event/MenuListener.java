@@ -9,4 +9,6 @@ public interface MenuListener {
     public void onContentsChange(MenuEvent event);
 
     public void onSelectionChange(MenuEvent event);
+    
+    public void onModelChange(ModelChangeEvent event);
 }
