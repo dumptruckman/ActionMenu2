@@ -258,7 +258,7 @@ class DefaultModel extends ForwardingList<MenuItem>
             } else {
                 builder.append(i);
             }
-            builder.append(" : ").append("\"").append(get(0).toString()).append("\"");
+            builder.append(" : ").append("\"").append(get(i).toString()).append("\"");
         }
         builder.append(" ]");
         return builder.toString();
