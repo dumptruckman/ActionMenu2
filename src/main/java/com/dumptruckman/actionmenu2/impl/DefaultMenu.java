@@ -164,4 +164,14 @@ class DefaultMenu implements Menu {
     public void onSelectionChange(MenuEvent event) {
 
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getClass().getCanonicalName());
+        builder.append(": { Model : ").append(getModel().toString());
+        builder.append(", Views : ").append(getViews().toString());
+        builder.append(" }");
+        return builder.toString();
+    }
 }

@@ -112,7 +112,13 @@ public class SimpleMenuItem implements MenuItem {
         return this.selectable;
     }
     
+    @Override
     public List<Block> getBlocks() {
         return this.blocks;
+    }
+    
+    @Override
+    public String toString() {
+        return this.getFullText();
     }
 }

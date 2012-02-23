@@ -244,6 +244,25 @@ class DefaultModel extends ForwardingList<MenuItem>
         }
         return getFirstSelectableIndex();
     }
+    
+    @Override public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size(); i++) {
+            if (builder.toString().isEmpty()) {
+                builder.append("[ ");
+            } else {
+                builder.append(", ");
+            }
+            if (i == getSelectedIndex()) {
+                builder.append("*").append(i).append("*");
+            } else {
+                builder.append(i);
+            }
+            builder.append(" : ").append("\"").append(get(0).toString()).append("\"");
+        }
+        builder.append(" ]");
+        return builder.toString();
+    }
 
     @Override
     public Set<MenuListener> getMenuListeners() {

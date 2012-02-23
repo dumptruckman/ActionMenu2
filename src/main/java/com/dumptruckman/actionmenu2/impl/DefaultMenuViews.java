@@ -1,6 +1,7 @@
 package com.dumptruckman.actionmenu2.impl;
 
 import com.dumptruckman.actionmenu2.api.Menu;
+import com.dumptruckman.actionmenu2.api.MenuItem;
 import com.dumptruckman.actionmenu2.api.MenuView;
 import com.dumptruckman.actionmenu2.api.MenuViews;
 import org.bukkit.entity.Player;
@@ -52,5 +53,20 @@ class DefaultMenuViews implements MenuViews {
     @Override
     public Iterator<MenuView> iterator() {
         return this.views.iterator();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (MenuView view : this) {
+            if (builder.toString().isEmpty()) {
+                builder.append("[ ");
+            } else {
+                builder.append(", ");
+            }
+            builder.append(view.toString());
+        }
+        builder.append(" ]");
+        return builder.toString();
     }
 }

@@ -32,4 +32,11 @@ public abstract class AbstractSignView extends AbstractView {
         }
         this.showMenu(menu, player);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getClass().getCanonicalName()).append(" : Sign @ ").append(this.block.getLocation().toString());
+        return builder.toString();
+    }
 }

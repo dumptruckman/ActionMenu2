@@ -41,4 +41,11 @@ public abstract class AbstractView implements MenuView {
     public void onSelectionChange(MenuEvent event) {
 
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getClass().getCanonicalName());
+        return builder.toString();
+    }
 }
