@@ -4,7 +4,6 @@ import com.dumptruckman.actionmenu2.api.AbstractSignView;
 import com.dumptruckman.actionmenu2.api.Menu;
 import com.dumptruckman.actionmenu2.api.MenuModel;
 import com.dumptruckman.actionmenu2.api.event.MenuEvent;
-import com.dumptruckman.actionmenu2.api.event.MenuListener;
 import com.dumptruckman.actionmenu2.api.event.ModelChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +11,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class DefaultSignView extends AbstractSignView {
+class DefaultSignView extends AbstractSignView {
 
     public static final long UPDATE_TICKS = 7;
     public static final int SIGN_LINES = 4;
