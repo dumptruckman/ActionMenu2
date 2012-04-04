@@ -1,16 +1,14 @@
 package com.dumptruckman.minecraft.actionmenu2.api;
 
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemListener;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Set;
 
-public interface MenuItem {
+public interface MenuItem<U extends MenuUser, B extends MenuBlock> {
 
-    Set<MenuItemListener> getMenuItemListeners();
+    Set<MenuItemListener<U, B>> getMenuItemListeners();
 
     void run();
 
@@ -28,11 +26,11 @@ public interface MenuItem {
 
     Image getImage();
     
-    List<Block> getBlocks();
+    List<B> getBlocks();
 
     void setSelectable(boolean selectable);
 
     boolean isSelectable();
 
-    void update(Player player);
+    void update(U user);
 }

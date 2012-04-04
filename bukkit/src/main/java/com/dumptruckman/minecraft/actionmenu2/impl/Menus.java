@@ -15,20 +15,20 @@ public class Menus {
         throw new AssertionError();
     }
 
-    public static Menu newMenu(Plugin plugin, MenuModel model, MenuView view) throws IllegalArgumentException {
-        return new DefaultMenu(plugin, model, view);
+    public static Menu<BukkitPlugin, BukkitPlayer> newMenu(Plugin plugin, MenuModel model, MenuView view) throws IllegalArgumentException {
+        return new DefaultMenu<BukkitPlugin, BukkitPlayer>(BukkitPlugin.get(plugin), model, view);
     }
     
-    public static Menu newMenu(Plugin plugin, MenuModel model) throws IllegalArgumentException {
-        return new DefaultMenu(plugin, model);
+    public static Menu<BukkitPlugin, BukkitPlayer> newMenu(Plugin plugin, MenuModel model) throws IllegalArgumentException {
+        return new DefaultMenu<BukkitPlugin, BukkitPlayer>(BukkitPlugin.get(plugin), model);
     }
     
-    private static Menu newMenu(Plugin plugin, MenuView view) {
-        return new DefaultMenu(plugin, view);
+    private static Menu<BukkitPlugin, BukkitPlayer> newMenu(Plugin plugin, MenuView view) {
+        return new DefaultMenu<BukkitPlugin, BukkitPlayer>(BukkitPlugin.get(plugin), view);
     }
     
-    public static Menu newMenu(Plugin plugin, Sign sign) {
-        Menu menu = newMenu(plugin);
+    public static Menu<BukkitPlugin, BukkitPlayer> newMenu(Plugin plugin, Sign sign) {
+        Menu<BukkitPlugin, BukkitPlayer> menu = newMenu(plugin);
         DefaultSignView view = new DefaultSignView(plugin, sign);
         menu.getModel().getMenuListeners().add(view);
         menu.getViews().add(view);
@@ -64,8 +64,8 @@ public class Menus {
         }
     }
 
-    public static Menu newMenu(Plugin plugin) {
-        return new DefaultMenu(plugin);
+    public static Menu<BukkitPlugin, BukkitPlayer> newMenu(Plugin plugin) {
+        return new DefaultMenu<BukkitPlugin, BukkitPlayer>(BukkitPlugin.get(plugin));
     }
     
     public static MenuModel newMenuModel() {

@@ -1,14 +1,17 @@
 package com.dumptruckman.minecraft.actionmenu2.api.event;
 
-public interface MenuListener {
+import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 
-    public void onContentsAdd(MenuEvent event);
+public interface MenuListener<U extends MenuUser, B extends MenuBlock> {
 
-    public void onContentsRemove(MenuEvent event);
+    public void onContentsAdd(MenuEvent<U, B> event);
 
-    public void onContentsChange(MenuEvent event);
+    public void onContentsRemove(MenuEvent<U, B> event);
 
-    public void onSelectionChange(MenuEvent event);
+    public void onContentsChange(MenuEvent<U, B> event);
+
+    public void onSelectionChange(MenuEvent<U, B> event);
     
-    public void onModelChange(ModelChangeEvent event);
+    public void onModelChange(ModelChangeEvent<U, B> event);
 }

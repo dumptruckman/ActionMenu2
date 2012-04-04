@@ -1,17 +1,16 @@
 package com.dumptruckman.minecraft.actionmenu2.api;
 
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener;
-import org.bukkit.entity.Player;
 
 import java.util.Set;
 
-public interface Menu extends MenuListener {
+public interface Menu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock> extends MenuListener {
 
-    MenuModel getModel();
+    MenuModel<U, B> getModel();
 
-    void setModel(MenuModel model);
+    void setModel(MenuModel<U, B> model);
     
-    MenuItem getSelected();
+    MenuItem<U, B> getSelected();
 
     void cycleSelection();
 
@@ -19,9 +18,9 @@ public interface Menu extends MenuListener {
 
     MenuViews getViews();
 
-    void setUser(Player player);
+    void setUser(U user);
 
-    Player getUser();
+    U getUser();
     
     void updateViews();
 

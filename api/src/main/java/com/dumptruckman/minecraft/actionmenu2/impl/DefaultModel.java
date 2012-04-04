@@ -1,7 +1,9 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
+import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuModel;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener;
 import com.dumptruckman.minecraft.actionmenu2.api.util.ForwardingList;
@@ -12,20 +14,20 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-class DefaultModel extends ForwardingList<MenuItem>
-        implements MenuModel {
+class DefaultModel<U extends MenuUser, B extends MenuBlock> extends ForwardingList<MenuItem<U, B>>
+        implements MenuModel<U, B> {
 
     private final Set<MenuListener> listeners;
     private int selectedIndex;
 
-    private DefaultModel(final List<MenuItem> contents) {
+    private DefaultModel(final List<MenuItem<U, B>> contents) {
         super(contents);
         this.listeners = new LinkedHashSet<MenuListener>();
         this.selectedIndex = this.size() - 1;
     }
 
     protected DefaultModel() {
-        this(new ArrayList<MenuItem>());
+        this(new ArrayList<MenuItem<U, B>>());
     }
 
     @Override
@@ -50,7 +52,7 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public final boolean add(final MenuItem e) {
+    public final boolean add(final MenuItem<U, B> e) {
         int index = this.size();
         boolean added = super.add(e);
         if (added) {
@@ -66,7 +68,7 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public final void add(final int index, final MenuItem e) {
+    public final void add(final int index, final MenuItem<U, B> e) {
         super.add(index, e);
         MenuEvent event = new MenuEvent(this, MenuEvent.CONTENTS_ADDED, index, index);
         for (MenuListener listener : this.listeners) {
@@ -96,7 +98,7 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public final boolean addAll(final Collection<? extends MenuItem> c) {
+    public final boolean addAll(final Collection<? extends MenuItem<U, B>> c) {
         int index0 = this.size();
         boolean added = super.addAll(c);
         int index1 = this.size();
@@ -114,7 +116,7 @@ class DefaultModel extends ForwardingList<MenuItem>
 
     @Override
     public final boolean addAll(final int index,
-                                final Collection<? extends MenuItem> c) {
+                                final Collection<? extends MenuItem<U, B>> c) {
         boolean added = super.addAll(index, c);
         int index1 = index + c.size();
         if (added) {
@@ -191,8 +193,8 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public final MenuItem set(final int index, final MenuItem element) {
-        MenuItem e = super.set(index, element);
+    public final MenuItem<U, B> set(final int index, final MenuItem<U, B> element) {
+        MenuItem<U, B> e = super.set(index, element);
         if (this.getSelectedIndex() == index && !element.isSelectable()) {
             this.setSelectedIndex(this.getPreviousSelectableIndex(index));
         }
@@ -204,8 +206,8 @@ class DefaultModel extends ForwardingList<MenuItem>
     }
 
     @Override
-    public final MenuItem remove(final int index) {
-        MenuItem e = super.remove(index);
+    public final MenuItem<U, B> remove(final int index) {
+        MenuItem<U, B> e = super.remove(index);
         MenuEvent event = new MenuEvent(this, MenuEvent.CONTENTS_REMOVED, index, index);
         for (MenuListener listener : this.listeners) {
             listener.onContentsChange(event);

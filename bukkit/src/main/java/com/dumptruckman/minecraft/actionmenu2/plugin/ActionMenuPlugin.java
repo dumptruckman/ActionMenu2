@@ -4,6 +4,10 @@ import com.dumptruckman.minecraft.actionmenu2.api.Menu;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemListener;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitBlock;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitMenuItem;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlayer;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlugin;
 import com.dumptruckman.minecraft.actionmenu2.impl.Menus;
 import com.dumptruckman.minecraft.actionmenu2.impl.SimpleMenuItem;
 import org.bukkit.Bukkit;
@@ -23,7 +27,7 @@ import org.bukkit.util.Vector;
 public class ActionMenuPlugin extends JavaPlugin implements Listener {
 
     private Block block = null;
-    private Menu menu = null;
+    private Menu<BukkitPlugin, BukkitPlayer> menu = null;
 
     public final void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -40,7 +44,7 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         if (event.getLine(0).contains("menu")) {
             menu = Menus.newMenu(this,
                     (Sign) event.getBlock().getState());
-            MenuItem test = new SimpleMenuItem();
+            MenuItem<BukkitBlock> test = new BukkitMenuItem();
             test.setText("test");
             test.getMenuItemListeners().add(new TestMenuItemListener());
             MenuItem poop = new SimpleMenuItem();
@@ -51,7 +55,7 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
             menu.getModel().add(test);
             menu.getModel().add(poop);
             menu.getModel().add(scoop);
-            menu.setUser(event.getPlayer());
+            menu.setUser(BukkitPlayer.get(event.getPlayer()));
             this.block = event.getBlock();
         }
     }
@@ -72,14 +76,14 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         }
 
         Player player = event.getPlayer();
-        menu.setUser(player);
+        menu.setUser(BukkitPlayer.get(player));
 
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             menu.getSelected().run();
         } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             menu.cycleSelection();
         }
-        menu.setUser(player);
+        menu.setUser(BukkitPlayer.get(player));
     }
 
     @EventHandler
@@ -98,9 +102,9 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
 
     private class TestMenuItemListener implements MenuItemListener {
         public void onAction(final MenuItemEvent event) {
-            if (event.getSender() != null
-                    && event.getSender() instanceof Player) {
-                Player player = (Player) event.getSender();
+            if (event.getUser() != null
+                    && event.getUser() instanceof Player) {
+                Player player = (Player) event.getUser();
                 final Vector direction = player.getEyeLocation()
                         .getDirection().multiply(2);
                 player.getWorld().spawn(player.getEyeLocation()

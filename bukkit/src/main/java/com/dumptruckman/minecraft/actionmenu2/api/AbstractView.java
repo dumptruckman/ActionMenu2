@@ -2,17 +2,17 @@ package com.dumptruckman.minecraft.actionmenu2.api;
 
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.ModelChangeEvent;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlayer;
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlugin;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
-public abstract class AbstractView implements MenuView {
+public abstract class AbstractView implements MenuView<BukkitPlugin, BukkitPlayer> {
 
     @Override
-    public abstract void showMenu(Menu menu, Player player);
+    public abstract void showMenu(Menu menu, MenuUser player);
 
     @Override
-    public void update(Plugin plugin, final Menu menu, final Player player) {
+    public void update(BukkitPlugin plugin, final Menu menu, final BukkitPlayer player) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
@@ -21,7 +21,7 @@ public abstract class AbstractView implements MenuView {
         });
     }
     
-    protected abstract void updateView(Menu menu, Player player);
+    protected abstract void updateView(Menu menu, BukkitPlayer player);
 
     @Override
     public void onContentsAdd(MenuEvent event) {

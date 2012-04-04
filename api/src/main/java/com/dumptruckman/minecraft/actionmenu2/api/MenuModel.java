@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface MenuModel extends List<MenuItem> {
+public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List<MenuItem<U, B>> {
     
     int getSelectedIndex();
 
@@ -21,7 +21,7 @@ public interface MenuModel extends List<MenuItem> {
      * restrictions on the type of elements that may be added.  List
      * classes should clearly specify in their documentation any restrictions
      * on what elements may be added.
-     * <p>If successful, makes a call to {@link com.dumptruckman.actionmenu2.api.event.MenuListener#onContentsAdd(com.dumptruckman.actionmenu2.api.event.MenuEvent)}
+     * <p>If successful, makes a call to {@link com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener#onContentsAdd(com.dumptruckman.minecraft.actionmenu2.api.event.MenuEvent)}
      * for all registered listeners
      *
      * @param e element to be appended to this list
@@ -36,7 +36,7 @@ public interface MenuModel extends List<MenuItem> {
      *                                       prevents it from being added to this list
      */
     @Override
-    boolean add(MenuItem e);
+    boolean add(MenuItem<U, B> e);
 
     /**
      * Removes the first occurrence of the specified element from this list,
@@ -82,7 +82,7 @@ public interface MenuModel extends List<MenuItem> {
      * @see #add(Object)
      */
     @Override
-    boolean addAll(Collection<? extends MenuItem> c);
+    boolean addAll(Collection<? extends MenuItem<U, B>> c);
 
     /**
      * Inserts all of the elements in the specified collection into this
@@ -112,7 +112,7 @@ public interface MenuModel extends List<MenuItem> {
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    boolean addAll(int index, Collection<? extends MenuItem> c);
+    boolean addAll(int index, Collection<? extends MenuItem<U, B>> c);
 
     /**
      * Removes from this list all of its elements that are contained in the
@@ -183,14 +183,14 @@ public interface MenuModel extends List<MenuItem> {
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    MenuItem set(int index, MenuItem element);
+    MenuItem<U, B> set(int index, MenuItem<U, B> element);
 
     /**
      * Inserts the specified element at the specified position in this list
      * (optional operation).  Shifts the element currently at that position
      * (if any) and any subsequent elements to the right (adds one to their
      * indices).
-     * <p>A makes a call to {@link com.dumptruckman.actionmenu2.api.event.MenuListener#onContentsAdd(com.dumptruckman.actionmenu2.api.event.MenuEvent)}
+     * <p>A makes a call to {@link com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener#onContentsAdd(com.dumptruckman.minecraft.actionmenu2.api.event.MenuEvent)}
      * for all registered listeners
      *
      * @param index   index at which the specified element is to be inserted
@@ -207,7 +207,7 @@ public interface MenuModel extends List<MenuItem> {
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    void add(int index, MenuItem element);
+    void add(int index, MenuItem<U, B> element);
 
     /**
      * Removes the element at the specified position in this list (optional
@@ -223,7 +223,7 @@ public interface MenuModel extends List<MenuItem> {
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    MenuItem remove(int index);
+    MenuItem<U, B> remove(int index);
     
     Set<MenuListener> getMenuListeners();
 }

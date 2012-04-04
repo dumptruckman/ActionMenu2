@@ -1,10 +1,10 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
 import com.dumptruckman.minecraft.actionmenu2.api.Menu;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuPlugin;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuView;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuViews;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -13,10 +13,10 @@ import java.util.Set;
 class DefaultMenuViews implements MenuViews {
 
     private Set<MenuView> views = new LinkedHashSet<MenuView>();
-    private Plugin plugin;
+    private MenuPlugin plugin;
     private Menu menu;
     
-    public DefaultMenuViews(Plugin plugin, Menu menu) {
+    public DefaultMenuViews(MenuPlugin plugin, Menu menu) {
         this.plugin = plugin;
         this.menu = menu;
     }
@@ -43,7 +43,7 @@ class DefaultMenuViews implements MenuViews {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(MenuUser player) {
         for (MenuView view : this.views) {
             view.update(this.plugin, this.menu, player);
         }

@@ -1,8 +1,8 @@
 package com.dumptruckman.minecraft.actionmenu2.api;
 
+import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 
 public abstract class AbstractSignView extends AbstractView {
 
@@ -23,10 +23,10 @@ public abstract class AbstractSignView extends AbstractView {
     }
     
     @Override
-    public abstract void showMenu(Menu menu, Player player);
+    public abstract void showMenu(Menu menu, BukkitPlayer player);
 
     @Override
-    protected void updateView(Menu menu, Player player) {
+    protected void updateView(Menu menu, BukkitPlayer player) {
         if (player != null) {
             player.sendBlockChange(this.getBlock().getLocation(), 0, (byte) 0);
         }

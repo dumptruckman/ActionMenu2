@@ -1,7 +1,5 @@
 package com.dumptruckman.minecraft.actionmenu2.api;
 
-import org.bukkit.entity.Player;
-
 import java.util.Iterator;
 
 public interface MenuViews extends Iterable<MenuView> {
@@ -10,7 +8,7 @@ public interface MenuViews extends Iterable<MenuView> {
 
     boolean remove(MenuView view);
 
-    void update(Player player);
+    void update(MenuUser player);
 
     @Override
     Iterator<MenuView> iterator();

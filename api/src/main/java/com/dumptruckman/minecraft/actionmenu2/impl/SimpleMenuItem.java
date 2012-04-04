@@ -1,10 +1,10 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
+import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemListener;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,30 +13,30 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SimpleMenuItem implements MenuItem {
+public class SimpleMenuItem<U extends MenuUser, B extends MenuBlock> implements MenuItem<U, B> {
 
-    private final Set<MenuItemListener> listeners = new LinkedHashSet<MenuItemListener>();
+    private final Set<MenuItemListener<U, B>> listeners = new LinkedHashSet<MenuItemListener<U, B>>();
     private List<String> text = null;
     private Image image = null;
-    private final List<Block> blocks = new ArrayList<Block>();
-    private Player player = null;
+    private final List<B> blocks = new ArrayList<B>();
+    private U user = null;
     private boolean selectable = true;
 
     protected final void fireChangeEvent() {
-        for (MenuItemListener listener : this.getMenuItemListeners()) {
-            listener.onMenuItemChange(new MenuItemEvent(
-                    this.player, this));
+        for (MenuItemListener<U, B> listener : this.getMenuItemListeners()) {
+            listener.onMenuItemChange(new MenuItemEvent<U, B>(
+                    this.user, this));
         }
     }
 
     public void run() {
-        for (MenuItemListener listener : this.getMenuItemListeners()) {
-            listener.onAction(new MenuItemEvent(this.player, this));
+        for (MenuItemListener<U, B> listener : this.getMenuItemListeners()) {
+            listener.onAction(new MenuItemEvent<U, B>(this.user, this));
         }
     }
     
     @Override
-    public Set<MenuItemListener> getMenuItemListeners() {
+    public Set<MenuItemListener<U, B>> getMenuItemListeners() {
         return this.listeners;
     }
 
@@ -98,8 +98,8 @@ public class SimpleMenuItem implements MenuItem {
     }
 
     @Override
-    public void update(Player player) {
-        this.player = player;
+    public void update(U user) {
+        this.user = user;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SimpleMenuItem implements MenuItem {
     }
     
     @Override
-    public List<Block> getBlocks() {
+    public List<B> getBlocks() {
         return this.blocks;
     }
     

@@ -1,24 +1,25 @@
 package com.dumptruckman.minecraft.actionmenu2.api.event;
 
+import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
-import org.bukkit.command.CommandSender;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 
-public class MenuItemEvent {
+public class MenuItemEvent<U extends MenuUser, B extends MenuBlock> {
 
-    private final MenuItem menuItem;
-    private final CommandSender sender;
+    private final MenuItem<U, B> menuItem;
+    private final U user;
 
-    public MenuItemEvent(final CommandSender sender,
-                         final MenuItem item) {
-        this.sender = sender;
+    public MenuItemEvent(final U user,
+                         final MenuItem<U, B> item) {
+        this.user = user;
         this.menuItem = item;
     }
 
-    public final MenuItem getMenuItem() {
+    public final MenuItem<U, B> getMenuItem() {
         return this.menuItem;
     }
 
-    public CommandSender getSender() {
-        return this.sender;
+    public U getUser() {
+        return this.user;
     }
 }
