@@ -6,9 +6,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.Set;
 
-public interface MenuItem<U extends MenuUser, B extends MenuBlock> {
+public interface MenuItem {
 
-    Set<MenuItemListener<U, B>> getMenuItemListeners();
+    Set<MenuItemListener> getMenuItemListeners();
 
     void run();
 
@@ -26,11 +26,11 @@ public interface MenuItem<U extends MenuUser, B extends MenuBlock> {
 
     Image getImage();
     
-    List<B> getBlocks();
+    List<MCBlock> getBlocks();
 
     void setSelectable(boolean selectable);
 
     boolean isSelectable();
 
-    void update(U user);
+    void update(MenuUser user);
 }

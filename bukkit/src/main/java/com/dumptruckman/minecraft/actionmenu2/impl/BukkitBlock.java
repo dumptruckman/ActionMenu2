@@ -1,6 +1,6 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
-import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
+import com.dumptruckman.minecraft.actionmenu2.api.MCBlock;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BukkitBlock implements MenuBlock, Block {
+public class BukkitBlock implements MCBlock, Block {
 
     public static Map<Block, BukkitBlock> blockMap = new HashMap<Block, BukkitBlock>();
 

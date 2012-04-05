@@ -1,7 +1,6 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
 import com.dumptruckman.minecraft.actionmenu2.api.Menu;
-import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuModel;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuPlugin;
@@ -14,14 +13,14 @@ import com.dumptruckman.minecraft.actionmenu2.api.event.ModelChangeEvent;
 
 import java.util.Set;
 
-class DefaultMenu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock> implements Menu<P, U, B> {
+class DefaultMenu implements Menu {
 
-    private MenuModel<U, B> model;
-    private P plugin = null;
-    private U player = null;
+    private MenuModel model;
+    private MenuPlugin plugin = null;
+    private MenuUser player = null;
     private MenuViews views;
 
-    protected DefaultMenu(P p, MenuModel<U, B> m) {
+    protected DefaultMenu(MenuPlugin p, MenuModel m) {
         if (m == null) {
             throw new IllegalArgumentException("Model may not be null!");
         }
@@ -35,28 +34,28 @@ class DefaultMenu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock>
         this.model.getMenuListeners().add(this);
     }
 
-    protected DefaultMenu(P p, final MenuModel<U, B> m, final MenuView v) {
+    protected DefaultMenu(MenuPlugin p, final MenuModel m, final MenuView v) {
         this(p, m);
         if (v != null) {
             this.views.add(v);
         }
     }
 
-    protected DefaultMenu(P p, MenuView v) {
-        this(p, new DefaultModel<U, B>(), v);
+    protected DefaultMenu(MenuPlugin p, MenuView v) {
+        this(p, new DefaultModel(), v);
     }
 
-    protected DefaultMenu(P p) {
+    protected DefaultMenu(MenuPlugin p) {
         this(p, (MenuView)null);
     }
 
     @Override
-    public MenuModel<U, B> getModel() {
+    public MenuModel getModel() {
         return this.model;
     }
 
     @Override
-    public void setModel(MenuModel<U, B> model) {
+    public void setModel(MenuModel model) {
         if (model == null) {
             throw new IllegalArgumentException("model may not be null!");
         }
@@ -76,7 +75,7 @@ class DefaultMenu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock>
     }
 
     @Override
-    public MenuItem<U, B> getSelected() {
+    public MenuItem getSelected() {
         if (this.getModel().getSelectedIndex() < 0) {
             return null;
         }
@@ -90,7 +89,7 @@ class DefaultMenu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock>
 
     @Override
     public final void cycleSelection(final boolean reverse) {
-        MenuModel<U, B> model = this.getModel();
+        MenuModel model = this.getModel();
         if (model.isEmpty()) {
             model.setSelectedIndex(-1);
             return;
@@ -123,16 +122,16 @@ class DefaultMenu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock>
     }
 
     @Override
-    public void setUser(U player) {
+    public void setUser(MenuUser player) {
         this.player = player;
     }
 
-    protected P getPlugin() {
+    protected MenuPlugin getPlugin() {
         return this.plugin;
     }
 
     @Override
-    public U getUser() {
+    public MenuUser getUser() {
         return this.player;
     }
 

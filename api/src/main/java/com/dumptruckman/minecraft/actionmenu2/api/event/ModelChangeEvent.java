@@ -1,24 +1,22 @@
 package com.dumptruckman.minecraft.actionmenu2.api.event;
 
-import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuModel;
-import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 
-public class ModelChangeEvent<U extends MenuUser, B extends MenuBlock> {
+public class ModelChangeEvent {
 
-    private MenuModel<U, B> oldModel;
-    private MenuModel<U, B> newModel;
+    private MenuModel oldModel;
+    private MenuModel newModel;
 
-    public ModelChangeEvent(MenuModel<U, B> oldModel, MenuModel<U, B> newModel) {
+    public ModelChangeEvent(MenuModel oldModel, MenuModel newModel) {
         this.oldModel = oldModel;
         this.newModel = newModel;
     }
 
-    public MenuModel<U, B> getOldModel() {
+    public MenuModel getOldModel() {
         return this.oldModel;
     }
 
-    public MenuModel<U, B> getNewModel() {
+    public MenuModel getNewModel() {
         return this.newModel;
     }
 }

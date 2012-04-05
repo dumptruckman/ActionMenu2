@@ -23,7 +23,7 @@ public abstract class AbstractSignView extends AbstractView {
     }
     
     @Override
-    public abstract void showMenu(Menu menu, BukkitPlayer player);
+    public abstract void showMenu(Menu menu, MenuUser player);
 
     @Override
     protected void updateView(Menu menu, BukkitPlayer player) {

@@ -1,6 +1,6 @@
 package com.dumptruckman.minecraft.actionmenu2.impl;
 
-import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
+import com.dumptruckman.minecraft.actionmenu2.api.MCBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemEvent;
@@ -13,30 +13,30 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SimpleMenuItem<U extends MenuUser, B extends MenuBlock> implements MenuItem<U, B> {
+public class SimpleMenuItem implements MenuItem {
 
-    private final Set<MenuItemListener<U, B>> listeners = new LinkedHashSet<MenuItemListener<U, B>>();
+    private final Set<MenuItemListener> listeners = new LinkedHashSet<MenuItemListener>();
     private List<String> text = null;
     private Image image = null;
-    private final List<B> blocks = new ArrayList<B>();
-    private U user = null;
+    private final List<MCBlock> blocks = new ArrayList<MCBlock>();
+    private MenuUser user = null;
     private boolean selectable = true;
 
     protected final void fireChangeEvent() {
-        for (MenuItemListener<U, B> listener : this.getMenuItemListeners()) {
-            listener.onMenuItemChange(new MenuItemEvent<U, B>(
+        for (MenuItemListener listener : this.getMenuItemListeners()) {
+            listener.onMenuItemChange(new MenuItemEvent(
                     this.user, this));
         }
     }
 
     public void run() {
-        for (MenuItemListener<U, B> listener : this.getMenuItemListeners()) {
-            listener.onAction(new MenuItemEvent<U, B>(this.user, this));
+        for (MenuItemListener listener : this.getMenuItemListeners()) {
+            listener.onAction(new MenuItemEvent(this.user, this));
         }
     }
     
     @Override
-    public Set<MenuItemListener<U, B>> getMenuItemListeners() {
+    public Set<MenuItemListener> getMenuItemListeners() {
         return this.listeners;
     }
 
@@ -98,7 +98,7 @@ public class SimpleMenuItem<U extends MenuUser, B extends MenuBlock> implements 
     }
 
     @Override
-    public void update(U user) {
+    public void update(MenuUser user) {
         this.user = user;
     }
 
@@ -113,7 +113,7 @@ public class SimpleMenuItem<U extends MenuUser, B extends MenuBlock> implements 
     }
     
     @Override
-    public List<B> getBlocks() {
+    public List<MCBlock> getBlocks() {
         return this.blocks;
     }
     

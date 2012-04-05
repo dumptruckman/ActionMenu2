@@ -3,6 +3,7 @@ package com.dumptruckman.minecraft.actionmenu2.impl;
 import com.dumptruckman.minecraft.actionmenu2.api.AbstractSignView;
 import com.dumptruckman.minecraft.actionmenu2.api.Menu;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuModel;
+import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.ModelChangeEvent;
 import org.bukkit.Bukkit;
@@ -29,13 +30,13 @@ class DefaultSignView extends AbstractSignView {
         ticker = new TickerTask();
     }
 
-    public void updateView(Menu menu, Player player) {
+    public void updateView(Menu menu, BukkitPlayer player) {
         super.updateView(menu, player);
         this.ticker.update(menu, player);
     }
 
     @Override
-    public void showMenu(Menu menu, Player player) {
+    public void showMenu(Menu menu, MenuUser player) {
         if (menu == null) {
             return;
         }
@@ -147,7 +148,7 @@ class DefaultSignView extends AbstractSignView {
 
         private void updateSelection() {
             DefaultSignView.this.selectedTextIndex++;
-            DefaultSignView.this.updateView(this.menu, this.player);
+            DefaultSignView.this.updateView(this.menu, BukkitPlayer.get(player));
         }
 
         @Override

@@ -4,13 +4,13 @@ import com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener;
 
 import java.util.Set;
 
-public interface Menu<P extends MenuPlugin, U extends MenuUser, B extends MenuBlock> extends MenuListener {
+public interface Menu extends MenuListener {
 
-    MenuModel<U, B> getModel();
+    MenuModel getModel();
 
-    void setModel(MenuModel<U, B> model);
+    void setModel(MenuModel model);
     
-    MenuItem<U, B> getSelected();
+    MenuItem getSelected();
 
     void cycleSelection();
 
@@ -18,9 +18,9 @@ public interface Menu<P extends MenuPlugin, U extends MenuUser, B extends MenuBl
 
     MenuViews getViews();
 
-    void setUser(U user);
+    void setUser(MenuUser user);
 
-    U getUser();
+    MenuUser getUser();
     
     void updateViews();
 

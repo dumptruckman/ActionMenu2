@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List<MenuItem<U, B>> {
+public interface MenuModel extends List<MenuItem> {
     
     int getSelectedIndex();
 
@@ -36,7 +36,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      *                                       prevents it from being added to this list
      */
     @Override
-    boolean add(MenuItem<U, B> e);
+    boolean add(MenuItem e);
 
     /**
      * Removes the first occurrence of the specified element from this list,
@@ -82,7 +82,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      * @see #add(Object)
      */
     @Override
-    boolean addAll(Collection<? extends MenuItem<U, B>> c);
+    boolean addAll(Collection<? extends MenuItem> c);
 
     /**
      * Inserts all of the elements in the specified collection into this
@@ -112,7 +112,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    boolean addAll(int index, Collection<? extends MenuItem<U, B>> c);
+    boolean addAll(int index, Collection<? extends MenuItem> c);
 
     /**
      * Removes from this list all of its elements that are contained in the
@@ -183,7 +183,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    MenuItem<U, B> set(int index, MenuItem<U, B> element);
+    MenuItem set(int index, MenuItem element);
 
     /**
      * Inserts the specified element at the specified position in this list
@@ -207,7 +207,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      *                                       (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
     @Override
-    void add(int index, MenuItem<U, B> element);
+    void add(int index, MenuItem element);
 
     /**
      * Removes the element at the specified position in this list (optional
@@ -223,7 +223,7 @@ public interface MenuModel<U extends MenuUser, B extends MenuBlock> extends List
      *                                       (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
-    MenuItem<U, B> remove(int index);
+    MenuItem remove(int index);
     
     Set<MenuListener> getMenuListeners();
 }

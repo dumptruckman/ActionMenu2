@@ -4,10 +4,7 @@ import com.dumptruckman.minecraft.actionmenu2.api.Menu;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemEvent;
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuItemListener;
-import com.dumptruckman.minecraft.actionmenu2.impl.BukkitBlock;
-import com.dumptruckman.minecraft.actionmenu2.impl.BukkitMenuItem;
 import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlayer;
-import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlugin;
 import com.dumptruckman.minecraft.actionmenu2.impl.Menus;
 import com.dumptruckman.minecraft.actionmenu2.impl.SimpleMenuItem;
 import org.bukkit.Bukkit;
@@ -27,7 +24,7 @@ import org.bukkit.util.Vector;
 public class ActionMenuPlugin extends JavaPlugin implements Listener {
 
     private Block block = null;
-    private Menu<BukkitPlugin, BukkitPlayer> menu = null;
+    private Menu menu = null;
 
     public final void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -44,7 +41,7 @@ public class ActionMenuPlugin extends JavaPlugin implements Listener {
         if (event.getLine(0).contains("menu")) {
             menu = Menus.newMenu(this,
                     (Sign) event.getBlock().getState());
-            MenuItem<BukkitBlock> test = new BukkitMenuItem();
+            MenuItem test = new SimpleMenuItem();
             test.setText("test");
             test.getMenuItemListeners().add(new TestMenuItemListener());
             MenuItem poop = new SimpleMenuItem();

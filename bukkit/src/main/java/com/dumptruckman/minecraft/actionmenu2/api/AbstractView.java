@@ -6,17 +6,17 @@ import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlayer;
 import com.dumptruckman.minecraft.actionmenu2.impl.BukkitPlugin;
 import org.bukkit.Bukkit;
 
-public abstract class AbstractView implements MenuView<BukkitPlugin, BukkitPlayer> {
+public abstract class AbstractView implements MenuView {
 
     @Override
     public abstract void showMenu(Menu menu, MenuUser player);
 
     @Override
-    public void update(BukkitPlugin plugin, final Menu menu, final BukkitPlayer player) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+    public void update(MenuPlugin plugin, final Menu menu, final MenuUser player) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask((BukkitPlugin) plugin, new Runnable() {
             @Override
             public void run() {
-                updateView(menu, player);
+                updateView(menu, (BukkitPlayer) player);
             }
         });
     }

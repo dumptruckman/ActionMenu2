@@ -1,25 +1,24 @@
 package com.dumptruckman.minecraft.actionmenu2.api.event;
 
-import com.dumptruckman.minecraft.actionmenu2.api.MenuBlock;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuItem;
 import com.dumptruckman.minecraft.actionmenu2.api.MenuUser;
 
-public class MenuItemEvent<U extends MenuUser, B extends MenuBlock> {
+public class MenuItemEvent {
 
-    private final MenuItem<U, B> menuItem;
-    private final U user;
+    private final MenuItem menuItem;
+    private final MenuUser user;
 
-    public MenuItemEvent(final U user,
-                         final MenuItem<U, B> item) {
+    public MenuItemEvent(final MenuUser user,
+                         final MenuItem item) {
         this.user = user;
         this.menuItem = item;
     }
 
-    public final MenuItem<U, B> getMenuItem() {
+    public final MenuItem getMenuItem() {
         return this.menuItem;
     }
 
-    public U getUser() {
+    public MenuUser getUser() {
         return this.user;
     }
 }

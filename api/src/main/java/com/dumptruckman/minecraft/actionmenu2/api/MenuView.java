@@ -2,9 +2,9 @@ package com.dumptruckman.minecraft.actionmenu2.api;
 
 import com.dumptruckman.minecraft.actionmenu2.api.event.MenuListener;
 
-public interface MenuView<P extends MenuPlugin, U extends MenuUser> extends MenuListener {
+public interface MenuView extends MenuListener {
 
-    void showMenu(Menu menu, U player);
+    void showMenu(Menu menu, MenuUser user);
 
-    void update(P plugin, Menu menu, U player);
+    void update(MenuPlugin plugin, Menu menu, MenuUser user);
 }

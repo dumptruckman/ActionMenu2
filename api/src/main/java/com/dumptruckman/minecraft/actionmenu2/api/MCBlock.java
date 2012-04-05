@@ -1,4 +1,4 @@
 package com.dumptruckman.minecraft.actionmenu2.api;
 
-public interface MenuBlock {
+public interface MCBlock {
 }
